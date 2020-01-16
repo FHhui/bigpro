@@ -1,2 +1,4 @@
 # bigpro
 元启发式算法小组代码框架
+该框架主要有algorithm，operator，problem，solutionSet，四个主类组成，分别对应着算法，运算符，问题，解决方法。
+其中算法algorithm主要有Singlealgorithm，Multialgorithm，Hyperalgorithm，分别对应单目标算法，多目标算法，超多目标算法，算法类的子类主要实现run方法与getResult方法，run方法通过调用getResult以及相关运算符得到solutionSet
