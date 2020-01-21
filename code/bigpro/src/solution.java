@@ -1,4 +1,6 @@
-public  class solution {
+import java.io.Serializable;
+
+public  class solution implements Serializable {
     //解决方案类，这个类就相当于；松鼠算法中的种群中的个体，也就是解集
     double[] fitness;//适应值集合,该集合的大小有问题的numberofobjective决定
     variable[] variables;//自变量集合

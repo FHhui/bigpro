@@ -19,21 +19,21 @@ public class GA extends SingleAlogorithm{
         s=GABR.execute(s,p);//随机初始化算子,对s进行初始化操作。
         for(int i=0;i<generation;i++){
             //遗传算法二进制交叉算子使用
-            GABinarySolutionSet child=s;
-            GABinaryCrossover GABC=new GABinaryCrossover(0.9);
-            GABC.execute(s);
+            GABinarySolutionSet child=solutionSet.clone(s);
+            GABinaryCrossover GABC=new GABinaryCrossover(0.6);
+            GABC.execute(child);
             //遗传算法二进制变异算子使用
-            GABinaryMutation GABM=new GABinaryMutation(0.5);
-            GABM.execute(s);
+            GABinaryMutation GABM=new GABinaryMutation(0.2);
+            GABM.execute(child);
 
             for (int a=0;a<s.array.size();a++){
-                s.array.set (a,((RGAproblem) p).evalute(s.array.get(a)));
+                child.array.set (a,((RGAproblem) p).evalute(child.array.get(a)));
                 s.array.set (a,((RGAproblem) p).evalute(s.array.get(a)));
                 //System.out.println(s.array.get(a).fitness[0]);
                 //为什么这里的父代与子代的值是一样的，是因为内存的原因么？
             }
             GABinaryGenSelection GABGS=new GABinaryGenSelection();
-            s=GABGS.execute(child,s);
+            s=GABGS.execute(s,child);
             GABinaryFindLocal GABF=new GABinaryFindLocal();
             int best=GABF.findbest(s);
             System.out.println(s.array.get(best).fitness[0]);
@@ -41,7 +41,7 @@ public class GA extends SingleAlogorithm{
         return s;
     }
     public static void main(String args[]){
-        GA test=new GA(2000,50);
+        GA test=new GA(10000,50);
         RGAproblem rgap=new RGAproblem();
         test.getResult(rgap);
     }
