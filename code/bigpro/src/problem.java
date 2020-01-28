@@ -3,6 +3,8 @@ import javax.print.attribute.standard.PrinterResolution;
 public abstract class problem {
     //问题类
     String name;//问题的名字
+    double upper;
+    double lower;
     int numberOfVariables;//自变量维度
     int numberOfObjectives;//目标自变量维度
     int numberOfConstraints;//定义域
