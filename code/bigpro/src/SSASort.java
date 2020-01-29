@@ -3,13 +3,15 @@ public class SSASort extends Sort{
     int is_best=SSA.is_best;
     int is_sec_best=SSA.is_sec_best;
     public SSADoubleSolutionSet execute(SSADoubleSolutionSet s) {
+
         for (int i=0;i<s.array.size();i++){
             for (int j=0;j<s.array.size()-1-i;j++){
                 //冒泡排序
                 if (s.array.get(j).fitness[0]>s.array.get(j+1).fitness[0]){
-                    SSADoubleSolution a=s.array.get(j);
-                    s.array.set(j,s.array.get(j+1));
-                    s.array.set(j,a);
+                    SSADoubleSolution a=solution.clone(s.array.get(j));
+                    SSADoubleSolution b=solution.clone(s.array.get(j+1));
+                    s.array.set(j,b);
+                    s.array.set(j+1,a);
                 }
             }
         }

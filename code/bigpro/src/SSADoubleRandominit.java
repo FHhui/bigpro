@@ -5,10 +5,11 @@ public class SSADoubleRandominit extends Randominit{
             SSADoubleSolution SDS = new SSADoubleSolution(p);
             for (int i = 0; i < SDS.variables.length; i++) {
                 SDS.variables[i].setDoubleVariable( p.lower + Math.random() * (p.upper - p.lower));
-                RGAproblem p1=(RGAproblem) p;
-                SDS=p1.evalute(SDS);
-                solutionS.add(SDS);
             }
+            RGAproblem p1=(RGAproblem) p;
+            SDS=p1.evalute(SDS);
+
+            solutionS.add(SDS);
         }
         return solutionS;
     }

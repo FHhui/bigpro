@@ -13,19 +13,19 @@ public class SSANewDisplacePlace extends operator {
     }
     public SSADoubleSolutionSet execute(SSADoubleSolutionSet s,Singleproblem p){
         //具体的操作方法
-        for (int i=0;i<s.array.size();i++){
+        for (int i=SSA.is_best;i<s.array.size();i++){
             double dg=0.5+Math.random()*0.61;
             double r=Math.random();//是否遇到捕食者的标尺
             double pdp=0.1;//不遇到捕食者的最低限度
             if (r>=pdp)//产生新位置，没有遇到捕食者,如果存在捕食者就原地不动
             {
-                if (i>=SSA.is_best&&i<SSA.is_best+SSA.is_sec_best){
-                    //对于次优解来说。
+                if (i>=SSA.is_best&&i<(SSA.is_best+SSA.is_sec_best)){
+                    //======>>对于次优解来说。<<========
                     for (int j=0;j<s.array.get(0).variables.length;j++){
                         //针对于每一个维度
                         double isMax= s.array.get(i).variables[j].doubleVariable + dg * gc * (s.array.get(0).variables[j].doubleVariable - s.array.get(i).variables[j].doubleVariable);
                         if(isMax>p.upper||isMax<p.lower) continue;
-                        else s.array.get(i).variables[j].doubleVariable=isMax;
+                        else s.array.get(i).variables[j].setDoubleVariable(isMax);
                     }
                 }
                 else if (i>=SSA.is_best+SSA.is_sec_best&&s.array.get(i).is_sec_best==false){
@@ -34,7 +34,7 @@ public class SSANewDisplacePlace extends operator {
                     for (int j = 0; j < s.array.get(0).variables.length; j++) {
                         double isMax= s.array.get(i).variables[j].doubleVariable + dg * gc * (s.array.get(which_second_best).variables[j].doubleVariable - s.array.get(i).variables[j].doubleVariable);
                         if(isMax>p.upper||isMax<p.lower) continue;
-                        else s.array.get(i).variables[j].doubleVariable=isMax;
+                        else s.array.get(i).variables[j].setDoubleVariable(isMax);
                     }
                 }else if (i>=SSA.is_best+SSA.is_sec_best&&s.array.get(i).is_sec_best==true){
                     //对于普通解但是去过次优解的解来说
@@ -42,11 +42,11 @@ public class SSANewDisplacePlace extends operator {
                         //针对于每一个维度
                         double isMax= s.array.get(i).variables[j].doubleVariable + dg * gc * (s.array.get(0).variables[j].doubleVariable - s.array.get(i).variables[j].doubleVariable);
                         if(isMax>p.upper||isMax<p.lower) continue;
-                        else s.array.get(i).variables[j].doubleVariable=isMax;
+                        else s.array.get(i).variables[j].setDoubleVariable(isMax);
                     }
                 }else{
                     for (int j = 0; j < s.array.get(0).variables.length; j++) {
-                        s.array.get(i).variables[j].doubleVariable= p.lower+Math.random() * (p.upper - p.lower);
+                        s.array.get(i).variables[j].setDoubleVariable( p.lower+Math.random() * (p.upper - p.lower));
                     }
                 }
             }

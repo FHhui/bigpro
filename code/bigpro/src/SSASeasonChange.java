@@ -32,6 +32,10 @@ public class SSASeasonChange extends operator{
                     continue;
             }
         }
+        for (int i=0;i<s.array.size();i++){
+            RGAproblem p1=(RGAproblem) p;
+            s.array.set(i,p1.evalute(s.array.get(i)));
+        }
         return s;
     }
     private double Factorial(double n) // 阶乘
@@ -55,7 +59,6 @@ public class SSASeasonChange extends operator{
         double sigma = Math.pow(((Factorial(beta) * Math.sin(Math.PI * beta / 2))
                 / (Factorial((beta - 1) / 2) * beta * Math.pow(2, ((beta - 1) / 2)))), 1 / beta);
         double levy = 1 * ra * sigma / (Math.pow((Math.abs(rb)), 1 / beta));
-        //if(debug==true) System.out.println("Levy值为"+levy);
         return levy;
     }
 }
