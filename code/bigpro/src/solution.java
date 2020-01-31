@@ -7,6 +7,7 @@ public  class solution implements Serializable {
     public solution(problem p){
         //System.out.println(p.getClass());
         fitness=new double[p.getNumberOfObjectives()];
+        //System.out.println(fitness.length);
         //System.out.println(p.getNumberOfObjectives());
         //具体的赋值留到了具体的解里面去，因为在这里无法确定variable的性质
     }
