@@ -8,7 +8,14 @@ public class RGAproblem extends Singleproblem{
         this.upper=5.12;
         this.lower=-5.12;
     }
-
+    public BADoubleSolution evalute(BADoubleSolution s){
+        s.fitness[0]=0;
+        for (int i=0;i<this.numberOfVariables;i++){
+            double dou=s.variables[i].getDoubleVariable();
+            s.fitness[0] += dou*dou-10*Math.cos(2*Math.PI*dou)+10;
+        }
+        return s;
+    }
     public SSADoubleSolution evalute(SSADoubleSolution s){
         //拉斯特林函数适应值计算，松鼠算法
         s.fitness[0]=0;

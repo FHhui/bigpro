@@ -1,5 +1,6 @@
 public class NSGADoubleGeneration extends Selection {
-    //author:FHhui 2020.1.31(nsga最后一个算子留念)
+    //author:FHhui
+    //2020.1.31(nsga最后一个算子留念)
     //nsga算法的迭代选择算子
     public NSGADoubleSolutionSet execute(NSGADoubleSolutionSet s,NSGADoubleSolutionSet s1,Multiproblem p){
         NSGADoubleSolutionSet news=new NSGADoubleSolutionSet(s.size());

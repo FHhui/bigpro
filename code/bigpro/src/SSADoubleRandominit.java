@@ -8,9 +8,9 @@ public class SSADoubleRandominit extends Randominit{
             }
             RGAproblem p1=(RGAproblem) p;
             SDS=p1.evalute(SDS);
-
             solutionS.add(SDS);
         }
+
         return solutionS;
     }
 }
