@@ -6,8 +6,10 @@ public class GABinaryMutation extends Mutation{
     }
     public GABinarySolutionSet execute(GABinarySolutionSet s) {
         for (int i=0;i<s.size();i++){
+            double m=Math.random();
             for (int j=0;j<s.array.get(i).variables.length;j++){
-                if (Math.random()<pm){
+
+                if (m<pm){
                     int pos=(int)(Math.random()*GABinarySolution.eLen);
                     StringBuilder strBuilder = new StringBuilder(s.array.get(i).variables[j].getBinaryVariable());
                     if (strBuilder.charAt(pos)=='0'){

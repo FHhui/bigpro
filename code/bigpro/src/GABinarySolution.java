@@ -4,7 +4,6 @@ public class GABinarySolution extends solution{
     static int eLen=10;//编码长度
     public GABinarySolution(Singleproblem p) {
         super(p);
-
         variables=new BinaryVariable[p.getNumberOfVariables()];
         for (int i=0;i<p.getNumberOfVariables();i++){
             variables[i]=new BinaryVariable();

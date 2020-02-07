@@ -1,6 +1,3 @@
-import javax.naming.PartialResultException;
-import java.util.Random;
-
 public class BA extends SingleAlogorithm{
     //ba算法蝙蝠算法
     int generation;//最大迭代次数
@@ -9,7 +6,7 @@ public class BA extends SingleAlogorithm{
     public BA(int generation,int humans){
         this.generation=generation;
         this.humans=humans;
-        r=0.4;
+        r=0.7;
     }
     public BADoubleSolutionSet run(Singleproblem p) {
         return getResult(p);
@@ -39,7 +36,7 @@ public class BA extends SingleAlogorithm{
                 if (Math.random()>r){//这就是随机变化？
                     double temp=Math.random();
                     for (int n=0;n<s.array.get(j).variables.length;n++){
-                        Stemp.variables[n].doubleVariable= 2*temp-1;
+                        Stemp.variables[n].doubleVariable= temp;
                         if(Stemp.variables[n].doubleVariable>=p.upper){
                             Stemp.variables[n].doubleVariable=p.upper-0.1;
                         }else if (Stemp.variables[n].doubleVariable<=p.lower){
@@ -57,7 +54,7 @@ public class BA extends SingleAlogorithm{
                     s.array.get(j).r0=s.array.get(j).r0*(1-Math.exp(-s.array.get(j).Rf*i));
                    r=s.array.get(j).r0;
                 }
-                BALocalDoubleSearch BADS=new BALocalDoubleSearch();
+                LocalDoubleSearch BADS=new LocalDoubleSearch();
                 s=BADS.execute(s);
                 //System.out.println(s.array.get(j).fitness[0]);
             }
@@ -67,7 +64,7 @@ public class BA extends SingleAlogorithm{
         return null;
     }
     public static void main(String args[]){
-        BA test=new BA(500,50);
+        BA test=new BA(50,50);
         RGAproblem p=new RGAproblem();
         test.getResult(p);
     }

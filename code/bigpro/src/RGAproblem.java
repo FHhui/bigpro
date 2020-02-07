@@ -8,7 +8,26 @@ public class RGAproblem extends Singleproblem{
         this.upper=5.12;
         this.lower=-5.12;
     }
+    public FADoubleSolution evalute(FADoubleSolution s){
+        //萤火虫算法适应值计算
+        s.fitness[0]=0;
+        for (int i=0;i<this.numberOfVariables;i++){
+            double dou=s.variables[i].getDoubleVariable();
+            s.fitness[0] += dou*dou-10*Math.cos(2*Math.PI*dou)+10;
+        }
+        return s;
+    }
+    public PSODoubleSolution evalute(PSODoubleSolution s){
+        //粒子群算法适应值计算
+        s.fitness[0]=0;
+        for (int i=0;i<this.numberOfVariables;i++){
+            double dou=s.variables[i].getDoubleVariable();
+            s.fitness[0] += dou*dou-10*Math.cos(2*Math.PI*dou)+10;
+        }
+        return s;
+    }
     public BADoubleSolution evalute(BADoubleSolution s){
+        //蝙蝠算法适应值计算
         s.fitness[0]=0;
         for (int i=0;i<this.numberOfVariables;i++){
             double dou=s.variables[i].getDoubleVariable();

@@ -18,12 +18,16 @@ public class GA extends SingleAlogorithm{
         GABinaryRandominit GABR=new GABinaryRandominit();//遗传算法二进制随机初始化算子
         s=GABR.execute(s,p);//随机初始化算子,对s进行初始化操作。
         for(int i=0;i<generation;i++){
-            //遗传算法二进制交叉算子使用
+
             GABinarySolutionSet child=solutionSet.clone(s);
-            GABinaryCrossover GABC=new GABinaryCrossover(0.6);
+            //选择父本
+//            GABinaryRealSelection GABRS=new GABinaryRealSelection();
+//            GABRS.execute(child);
+            //交叉
+            GABinaryCrossover GABC=new GABinaryCrossover(0.8);
             GABC.execute(child);
             //遗传算法二进制变异算子使用
-            GABinaryMutation GABM=new GABinaryMutation(0.2);
+            GABinaryMutation GABM=new GABinaryMutation(0.3);
             GABM.execute(child);
 
             for (int a=0;a<s.array.size();a++){
@@ -41,7 +45,7 @@ public class GA extends SingleAlogorithm{
         return s;
     }
     public static void main(String args[]){
-        GA test=new GA(10000,50);
+        GA test=new GA(10000,200);
         RGAproblem rgap=new RGAproblem();
         test.getResult(rgap);
     }

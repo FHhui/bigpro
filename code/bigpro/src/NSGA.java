@@ -45,7 +45,7 @@ public class NSGA extends MultiAlgorithm{
             for (int m=0;m<s.size();m++){
 
                 if (s.array.get(m).rank==1){
-                    //System.out.println("["+s.array.get(m).fitness[0]+","+s.array.get(m).fitness[1]+"],");
+                    System.out.println("["+s.array.get(m).fitness[0]+","+s.array.get(m).fitness[1]+"],");
                 }
             }
 

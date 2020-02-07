@@ -9,14 +9,11 @@ public class BADoubleRandominit extends Randominit{
             }
             RGAproblem p1=(RGAproblem) p;
             SDS=p1.evalute(SDS);
-
             solutionS.add(SDS);
         }
        //寻找本地最优解算子
-        BALocalDoubleSearch BALDS=new BALocalDoubleSearch();
+        LocalDoubleSearch BALDS=new LocalDoubleSearch();
         solutionS=BALDS.execute(solutionS);
-
-
         return solutionS;
     }
 }

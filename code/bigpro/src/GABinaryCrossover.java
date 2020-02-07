@@ -8,9 +8,13 @@ public class GABinaryCrossover extends Crossover{
         GABinaryRealSelection GABRS=new GABinaryRealSelection();
         s=GABRS.execute(s);//二进制锦标赛选择
         for (int i=0;i<s.array.size()-1;i++){//i代表第i个个体
+            double m=Math.random();
+
+
             for (int j=0;j<s.array.get(0).variables.length;j++){//j代表第j维的自变量
                 //自变量数组的长度代表着目标问题的维度
-                if (Math.random()<pc){
+
+                if (m<pc){
                     int pos=(int)(Math.random()*GABinarySolution.eLen);
                     String tmp=s.array.get(i).variables[j].getBinaryVariable().substring(pos);
                     s.array.get(i).variables[j].binaryVariable=s.array.get(i).variables[j].getBinaryVariable().substring(0,pos)+s.array.get(i+1).variables[j].getBinaryVariable().substring(pos);

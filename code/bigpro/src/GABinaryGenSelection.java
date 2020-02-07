@@ -10,8 +10,8 @@ public class GABinaryGenSelection extends Selection{
         if(child.array.get(cbest).fitness[0]<s.array.get(sbest).fitness[0]){
             return child;
         }else if (child.array.get(cbest).fitness[0]>s.array.get(sbest).fitness[0]){
-            child.replace(child.array.get(cworst),s.array.get(sbest));
-            return child;
+            //child.replace(child.array.get(cworst),s.array.get(sbest));
+            return s;
         }
         return child;
     }
