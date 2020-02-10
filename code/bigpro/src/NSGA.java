@@ -43,7 +43,6 @@ public class NSGA extends MultiAlgorithm{
             s=NSDG.execute(s,child,p);
             System.out.println("结果"+i+"代");
             for (int m=0;m<s.size();m++){
-
                 if (s.array.get(m).rank==1){
                     System.out.println("["+s.array.get(m).fitness[0]+","+s.array.get(m).fitness[1]+"],");
                 }

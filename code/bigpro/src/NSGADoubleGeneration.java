@@ -23,6 +23,8 @@ public class NSGADoubleGeneration extends Selection {
         totalS=Nfns.execute(totalS);
         NSGACalDistance Nscd=new NSGACalDistance();
         totalS=Nscd.execute(totalS);
+        NSSSASort NS=new NSSSASort();
+        totalS=NS.execute(totalS);//重新进行排序
         for (int i=0;i<s.size();i++){
             news.add(totalS.array.get(i));
         }

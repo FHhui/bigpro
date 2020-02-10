@@ -6,6 +6,7 @@ public class solutionSet implements Serializable {
     //在这里我们使用序列化来实现
     //解集类，这是一个解集,因为解集只有double类型的，所以无需子类
     ArrayList<solution> array;
+    //double fitness[];
     int realsize;
     int size;
     static  final long serialVersionUID = 3747630134243407984L;
