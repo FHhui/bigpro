@@ -9,6 +9,7 @@ public class NSSSA extends MultiAlgorithm {
     int human=50;//种群大小
     static int is_best=3;
     static int is_sec_best=9;
+
     public NSSSADoubleSolutionSet run(Multiproblem p) {
         return getResult(p);
     }

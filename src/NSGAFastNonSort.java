@@ -11,6 +11,57 @@ public class NSGAFastNonSort extends Sort{
     public solutionSet execute(solutionSet s) {
         return null;
     }
+    public NSGAIIIDoubleSolutionSet execute(NSGAIIIDoubleSolutionSet s){
+        ArrayList<NSGAIIIDoubleSolutionSet> F= new ArrayList<>();
+        NSGAIIIDoubleSolutionSet fx=new NSGAIIIDoubleSolutionSet(s.size);
+
+        for (int i=0;i<s.size;i++){
+            s.array.get(i).nq=0;
+            for (int j=0;j<s.size;j++){
+                int flag1=0;
+                int flag2=0;
+                if (j!=i){
+                    //快速非支配排序
+                    for (int m=0;m<s.array.get(j).fitness.length;m++){
+                        if (s.array.get(i).fitness[m]<s.array.get(j).fitness[m]){
+                            flag1++;
+                        }else if(s.array.get(i).fitness[m]>s.array.get(j).fitness[m]){
+                            flag2++;
+                        }
+                    }
+                    if (flag1==s.array.get(i).fitness.length){
+                        s.array.get(i).sp.add(s.array.get(j));
+                    }else if(flag1==s.array.get(i).fitness.length){
+                        s.array.get(i).nq++;
+                    }
+                }
+
+            }
+            if(s.array.get(i).nq==0){
+                s.array.get(i).rank=1;
+                fx.add(s.array.get(i));
+            }
+        }
+        F.add(fx);
+        int i=0;
+        while (F.get(i).array.size()!=0){
+            fx=new NSGAIIIDoubleSolutionSet(s.array.size());
+            for (int j=0;j<F.get(i).size();j++){//对F进行迭代
+                for (int m=0;m<F.get(i).array.get(j).sp.size();m++){
+                    //对F中的个体支配个体集进行迭代
+                    F.get(i).array.get(j).sp.get(m).nq--;
+                    if (F.get(i).array.get(j).sp.get(m).nq==0){
+                        F.get(i).array.get(j).sp.get(m).rank=i+2;
+                        fx.add(F.get(i).array.get(j).sp.get(m));
+                    }
+                }
+            }
+            F.add(fx);
+            i++;
+        }
+        //System.out.println("快排结束");
+        return s;
+    }
     public NSSSADoubleSolutionSet Texecute(NSSSADoubleSolutionSet s){
 
         ArrayList<NSSSADoubleSolutionSet> F=new ArrayList<NSSSADoubleSolutionSet>();

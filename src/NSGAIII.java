@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.Vector;
+
 /*author：FHhui
 * description: NSGAIII by java
 * */
@@ -9,12 +12,19 @@ public class NSGAIII extends HyperAlgorithm{
     double r;
     double pm;
     double k;
-    public NSGAIII(int generation,int popsize){
+    Hyperproblem p;
+    Vector<Integer> numberofDivisions;
+    List<ReferencePoint<NSGAIIIDoubleSolution>> referencePoints = new Vector<>() ;
+    public NSGAIII(int generation,int popsize,Hyperproblem p){
         this.generation=generation;
         this.popsize=popsize;
+        this.p=p;
+        this.numberofDivisions=new Vector<>(1);
+        numberofDivisions.add(12);//划分数
+        (new ReferencePoint<NSGAIIIDoubleSolution>()).generateReferencePoints(referencePoints,p.getNumberOfObjectives(), numberofDivisions);
     }
 
-    public solutionSet getResult(Hyperproblem p) {
+    public solutionSet getResult() {
         //随机初始化
         NSGAIIIDoubleSolutionSet NDS=new NSGAIIIDoubleSolutionSet(popsize);
         NSGAIIIDoubleRandominit NDR=new NSGAIIIDoubleRandominit();
@@ -37,14 +47,15 @@ public class NSGAIII extends HyperAlgorithm{
             }
             //快速非支配排序
             NSGAFastNonSort NFNS=new NSGAFastNonSort();
+            SUM=NFNS.execute(SUM);
             //参考点的部署
 
         }
         return null;
     }
 
-    public solutionSet run(Hyperproblem p) {
-        return getResult(p);
+    public solutionSet run() {
+        return getResult();
     }
     public  static  void main(String args[]){
 
