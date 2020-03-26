@@ -1,9 +1,6 @@
 import javafx.util.Pair;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class ReferencePoint<S extends solution> {
     public List<Double> position;
@@ -31,6 +28,18 @@ public class ReferencePoint<S extends solution> {
         }
         memberSize = 0;
         potentialMembers = new ArrayList<>();
+    }
+
+    public void RemovePotentialMember(S solution) {
+        Iterator<HashMap<S, Double>> it = this.potentialMembers.iterator();
+        while (it.hasNext()) {
+            HashMap<S,Double> hmap=it.next();
+            Iterator<S> it1=hmap.keySet().iterator();
+            if (it1.next().equals(solution)) {
+                it.remove();
+                break;
+            }
+        }
     }
 
     public void generateReferencePoints(
@@ -62,6 +71,14 @@ public class ReferencePoint<S extends solution> {
         //return referencePoints;
     }
 
+    public S RandomMember() {
+        Random random=new Random();
+        int index = this.potentialMembers.size()>1 ? random.nextInt( this.potentialMembers.size()-1):0;
+        Iterator<S> it=this.potentialMembers.get(index).keySet().iterator();
+        S s=it.next();
+        return s;
+    }
+
     public List<Double> pos() {
         return this.position;
     }
@@ -91,5 +108,18 @@ public class ReferencePoint<S extends solution> {
         this.potentialMembers.add(h);
     }
 
+    public S FindClosestMember() {
+        double minDistance = Double.MAX_VALUE;
+        S closetMember = null;
+        for (HashMap<S, Double> p : this.potentialMembers) {
+            Iterator<S> it = p.keySet().iterator();
+            S s = it.next();
+            if (p.get(s) < minDistance) {
+                minDistance = p.get(s);
+                closetMember = s;
+            }
+        }
+        return closetMember;
+    }
 
 }

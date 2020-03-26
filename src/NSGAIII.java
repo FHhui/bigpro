@@ -48,9 +48,15 @@ public class NSGAIII extends HyperAlgorithm{
             //快速非支配排序
             NSGAFastNonSort NFNS=new NSGAFastNonSort();
             SUM=NFNS.execute(SUM);
-            //参考点的部署
-
+            //迭代操作
+            NSGAIIIGeneration NG=new NSGAIIIGeneration();
+            NDS=NG.execute(SUM,referencePoints);
         }
+        for (int i=0;i<NDS.size;i++){
+            for (int j=0;j<NDS.array.get(i).fitness.length;j++)
+                System.out.print(NDS.array.get(i).fitness[j]+",");
+        }
+        System.out.println();
         return null;
     }
 
