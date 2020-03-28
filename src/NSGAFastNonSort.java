@@ -17,6 +17,7 @@ public class NSGAFastNonSort extends Sort{
 
         for (int i=0;i<s.size;i++){
             s.array.get(i).nq=0;
+            s.array.get(i).sp=new ArrayList<>();
             for (int j=0;j<s.size;j++){
                 int flag1=0;
                 int flag2=0;
@@ -31,7 +32,7 @@ public class NSGAFastNonSort extends Sort{
                     }
                     if (flag1==s.array.get(i).fitness.length){
                         s.array.get(i).sp.add(s.array.get(j));
-                    }else if(flag1==s.array.get(i).fitness.length){
+                    }else if(flag2==s.array.get(i).fitness.length){
                         s.array.get(i).nq++;
                     }
                 }
@@ -41,6 +42,7 @@ public class NSGAFastNonSort extends Sort{
                 s.array.get(i).rank=1;
                 fx.add(s.array.get(i));
             }
+
         }
         F.add(fx);
         int i=0;
@@ -53,6 +55,7 @@ public class NSGAFastNonSort extends Sort{
                     if (F.get(i).array.get(j).sp.get(m).nq==0){
                         F.get(i).array.get(j).sp.get(m).rank=i+2;
                         fx.add(F.get(i).array.get(j).sp.get(m));
+                        //System.out.println("123");
                     }
                 }
             }

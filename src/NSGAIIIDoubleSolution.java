@@ -5,7 +5,7 @@ public class NSGAIIIDoubleSolution extends solution{
     DoubleVariable[] variables;//自变量集合
     int nq;//个体被支配数
     int rank;//帕累托等级
-    ArrayList<NSSSADoubleSolution> sp;//支配集合
+    ArrayList<NSGAIIIDoubleSolution> sp;//支配集合
     public NSGAIIIDoubleSolution(Hyperproblem p){
         super(p);
         variables=new DoubleVariable[p.getNumberOfVariables()];
@@ -14,5 +14,14 @@ public class NSGAIIIDoubleSolution extends solution{
         }
         this.sp=new ArrayList<>();
         this.nq=0;
+    }
+    public NSGAIIIDoubleSolution copy(NSGAIIIDoubleSolution s,Hyperproblem p){
+        NSGAIIIDoubleSolution newS = new NSGAIIIDoubleSolution(p);
+
+        for (int i=0;i<variables.length;i++){
+            newS.variables[i].doubleVariable=s.variables[i].doubleVariable;
+        }
+        return  newS;
+
     }
 }

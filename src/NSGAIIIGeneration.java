@@ -7,38 +7,43 @@ public class NSGAIIIGeneration extends operator{
     HashMap<Integer,ArrayList<NSGAIIIDoubleSolution>> front;
     ArrayList<NSGAIIIDoubleSolution> front_l;
     List<ReferencePoint<NSGAIIIDoubleSolution>> referencePoints;
+    NSGAIIIDoubleSolutionSet s;
     public void execute() {
 
     }
+    public NSGAIIIGeneration(NSGAIIIDoubleSolutionSet s){
+        this.s=s;
+        this.front=new HashMap<>();
+        for (int i=0;i<s.size();i++){
+            //首先把帕累托等级给分开
+            if (front.keySet(). contains ( s.array.get(i).rank)){
+                front.get(s.array.get(i).rank).add(s.array.get(i));
 
+            } else{
+                front_l=new ArrayList<>();
+                front_l.add(s.array.get(i));
+                front.put(s.array.get(i).rank,front_l);
+            }
+        }
+    }
     @Override
     public solutionSet execute(solutionSet s) {
         return null;
     }
-    public  NSGAIIIDoubleSolutionSet execute(NSGAIIIDoubleSolutionSet s,List<ReferencePoint<NSGAIIIDoubleSolution>> ref){
+    public  NSGAIIIDoubleSolutionSet execute(List<ReferencePoint<NSGAIIIDoubleSolution>> ref){
         //ArrayList<NSGAIIIDoubleSolution> front=new ArrayList<>();
         int maxsize=s.size()/2;
         this.referencePoints=ref;
         NSGAIIIDoubleSolutionSet newS=new NSGAIIIDoubleSolutionSet(s.size/2);
-        front=new HashMap<>();
         //首先把帕累托等级分开，啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊我第一步就卡了
         //恶意吐槽时间，要不要重新在这里实现以下快速非支配排序呢，因为这样的话就有现成的了，hhhhh
         //好烦呢，用Map可以把它分开么，如果key集没有就新添加一个，aaaaa，
         // 应该可以
-        for (int i=0;i<s.size();i++){
-            //首先把帕累托等级给分开
-            if (front.keySet(). contains ( s.array.get(i).nq)){
-                front.get(s.array.get(i).nq).add(s.array.get(i));
-            } else{
-                front_l=new ArrayList<>();
-                front_l.add(s.array.get(i));
-                front.put(s.array.get(i).nq,front_l);
-            }
-        }
         //向里面放，知道放到第l-1层
         int rankingIndex=1;//表示第几层,因为是从帕累托等级为1开始的，所以，你懂的
         int candidateSolutions=0;
         while(candidateSolutions<maxsize){
+           // System.out.println(front.get(rankingIndex));
             candidateSolutions+=front.get(rankingIndex).size();
             if ((newS.size()+front.get(rankingIndex).size()<=maxsize)){
                 //如果没有溢出就往里面添加
@@ -66,11 +71,11 @@ public class NSGAIIIGeneration extends operator{
                 for (int f = 0; f < numberOfObjectives; f++) {
                     if(Math.abs(intercepts.get(f)-ideal_point.get(f))> 10e-10)
                     {
-                        ss.fitness[f]=ss.fitness[f]-ideal_point.get(f) / (intercepts.get(f)-ideal_point.get(f));
+                        ss.fitness[f]=(ss.fitness[f]-ideal_point.get(f)) / (intercepts.get(f)-ideal_point.get(f));
                     }
                     else
                     {
-                        ss.fitness[f]=ss.fitness[f]-ideal_point.get(f) / (intercepts.get(f)-ideal_point.get(f));
+                        ss.fitness[f]=(ss.fitness[f]-ideal_point.get(f)) / (intercepts.get(f)-ideal_point.get(f));
                     }
 
                 }
@@ -230,7 +235,7 @@ public class NSGAIIIGeneration extends operator{
         for (int f=0; f < numberOfObjectives; f+=1)
         {
             double min_ASF = Double.MAX_VALUE;
-            for (NSGAIIIDoubleSolution s : front.get(0)) {
+            for (NSGAIIIDoubleSolution s : front.get(1)) {
                 // only consider the individuals in the first front
                 double asf = ASF(s, f);
                 if ( asf < min_ASF ) {

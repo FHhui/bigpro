@@ -10,6 +10,7 @@ public class NSGADoubleMutation extends Mutation{
         for (int i=0;i<s.array.size();i++){
             double p=Math.random();
             if (p < pm) {
+                //System.out.println("1");
             for (int j=0;j<s.array.get(0).variables.length;j++){
                 int flag=(int)(Math.random()*2);
                 double temp=s.array.get(i).variables[j].doubleVariable;
@@ -35,6 +36,7 @@ public class NSGADoubleMutation extends Mutation{
         for (int i=0;i<s.array.size();i++){
             double p=Math.random();
             if (p < pm) {
+                //System.out.println("1");
                 for (int j=0;j<s.array.get(0).variables.length;j++){
                     int flag=(int)(Math.random()*2);
                     double temp=s.array.get(i).variables[j].doubleVariable;
