@@ -1,72 +1,53 @@
+package main.Operator;
+
+import main.Algorithm.MaShOA;
+import main.Solution.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class NSGAIIIGeneration extends operator{
-    HashMap<Integer,ArrayList<NSGAIIIDoubleSolution>> front;
-    ArrayList<NSGAIIIDoubleSolution> front_l;
-    List<ReferencePoint<NSGAIIIDoubleSolution>> referencePoints;
-    NSGAIIIDoubleSolutionSet s;
+public class MaShOAinitJF extends operator{
+    HashMap<Integer, ArrayList<MaShOADoubleSolution>> front;
+    List<ReferencePoint<MaShOADoubleSolution>> referencePoints;
+    MaShOADoubleSolutionSet s;
     public void execute() {
 
     }
-    public NSGAIIIGeneration(NSGAIIIDoubleSolutionSet s){
-        this.s=s;
-        this.front=new HashMap<>();
-        for (int i=0;i<s.size();i++){
-            //首先把帕累托等级给分开
-            if (front.keySet(). contains ( s.array.get(i).rank)){
-                front.get(s.array.get(i).rank).add(s.array.get(i));
 
-            } else{
-                front_l=new ArrayList<>();
-                front_l.add(s.array.get(i));
-                front.put(s.array.get(i).rank,front_l);
-            }
-        }
-    }
     @Override
     public solutionSet execute(solutionSet s) {
         return null;
     }
-    public  NSGAIIIDoubleSolutionSet execute(List<ReferencePoint<NSGAIIIDoubleSolution>> ref){
+    //construct
+    public MaShOAinitJF(MaShOADoubleSolutionSet s){
+        this.s=s;
+        this.front=new HashMap<>();
+        for (int i=0;i<s.size();i++){
+            //首先把帕累托等级给分开
+        }
+    }
+
+
+    public  MaShOADoubleSolutionSet execute(List<ReferencePoint<MaShOADoubleSolution>> ref,int generation){
         //ArrayList<NSGAIIIDoubleSolution> front=new ArrayList<>();
         int maxsize=s.size()/2;
         this.referencePoints=ref;
-        NSGAIIIDoubleSolutionSet newS=new NSGAIIIDoubleSolutionSet(s.size/2);
-        //首先把帕累托等级分开，啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊我第一步就卡了
-        //恶意吐槽时间，要不要重新在这里实现以下快速非支配排序呢，因为这样的话就有现成的了，hhhhh
-        //好烦呢，用Map可以把它分开么，如果key集没有就新添加一个，aaaaa，
-        // 应该可以
-        //向里面放，知道放到第l-1层
-        int rankingIndex=1;//表示第几层,因为是从帕累托等级为1开始的，所以，你懂的
-        int candidateSolutions=0;
-        while(candidateSolutions<maxsize){
-           // System.out.println(front.get(rankingIndex));
-            candidateSolutions+=front.get(rankingIndex).size();
-            if ((newS.size()+front.get(rankingIndex).size()<=maxsize)){
-                //如果没有溢出就往里面添加
-                front_l = front.get(rankingIndex);
-                for (int i = 0 ; i < front_l.size(); i++) {
-                    newS.add(front_l.get(i));
-                }
-            }
-        }
+        //NSGAIIIDoubleSolutionSet newS=new NSGAIIIDoubleSolutionSet(s.size/2);
         List<Double>   ideal_point;//理想点集合
         //寻找ideal point
         ideal_point=translateObjectives(s);
         //寻找extreme point
-        List<NSGAIIIDoubleSolution> extreme_point;//额外点集合
+        List<MaShOADoubleSolution> extreme_point;//额外点集合
         extreme_point=findExtremePoints(s);
         //根据extreme point 我们可以利用高斯消去得到截距
         List<Double> intercepts;
         intercepts=constructHyperplane(s,extreme_point);
         //根据截距，理想点，额外点，我们可以进行函数的标量化
         int numberOfObjectives=s.array.get(1).fitness.length;
-        for (int t=1; t<front.size(); t+=1)
-        {
-            for (NSGAIIIDoubleSolution ss : front.get(t)) {
+
+            for (MaShOADoubleSolution ss : s.array) {
 
                 for (int f = 0; f < numberOfObjectives; f++) {
                     if(Math.abs(intercepts.get(f)-ideal_point.get(f))> 10e-10)
@@ -80,90 +61,47 @@ public class NSGAIIIGeneration extends operator{
 
                 }
             }
-        }
+
         //划分参考点，将参考点带入
         associate(s);
-        //生成参考向量，计算距离和p
-        while (s.size() < maxsize)
-        {
-            int min_rp = FindNicheReferencePoint();
-
-            NSGAIIIDoubleSolution chosen = SelectClusterMember(this.referencePoints.get(min_rp));
-            if (chosen == null) // no potential member in Fl, disregard this reference point
-            {
-                this.referencePoints.remove(min_rp);
-            }
-            else
-            {
-                this.referencePoints.get(min_rp).AddMember();
-                this.referencePoints.get(min_rp).RemovePotentialMember(chosen);
-                s.add(chosen);
-            }
+        //生成参考向量，计算距离和p NSGA-III
+        //这里应该计算成就数值
+        int ref_associate_member_number=0;//参考点关联点数
+        for ( ReferencePoint<MaShOADoubleSolution> ref_point:referencePoints){
+            ref_associate_member_number+=ref_point.MemberSize();
         }
-
-        //添加，程序结束
+        int avl_ref_ass_number=0;//平均参考点数
+        avl_ref_ass_number=(int) Math.floor(ref_associate_member_number/referencePoints.size());
+        for (MaShOADoubleSolution solution:s.array){
+            solution.RPAA=solution.distance*(solution.referencePoint.MemberSize()/avl_ref_ass_number);
+        }
+        //计算完RPAA后，开始计算SE,同时计算JF
+        for (MaShOADoubleSolution news:s.array){
+            news=SE(news);
+            news.JF=news.se*(1/generation)+generation*(news.RPAA);
+        }
         return s;
     }
 
-    NSGAIIIDoubleSolution SelectClusterMember(ReferencePoint<NSGAIIIDoubleSolution> rp)
-    {
-        NSGAIIIDoubleSolution chosen = null;
-        if (rp.HasPotentialMember())
-        {
-            if (rp.MemberSize() == 0) // currently has no member
-            {
-                chosen =  rp.FindClosestMember();
-            }
-            else
-            {
-                chosen =  rp.RandomMember();
-            }
-        }
-        return chosen;
-    }
-
-    int FindNicheReferencePoint()
-    {
-        // find the minimal cluster size
-        int min_size = Integer.MAX_VALUE;
-        for (ReferencePoint<NSGAIIIDoubleSolution> referencePoint : this.referencePoints)
-            min_size = Math.min(min_size,referencePoint.MemberSize());
-
-        // find the reference points with the minimal cluster size Jmin
-        List<Integer> min_rps=new ArrayList<>();
-        for (int r=0; r<this.referencePoints.size(); r+=1)
-        {
-            if (this.referencePoints.get(r).MemberSize() == min_size)
-            {
-                min_rps.add(r);
-            }
-        }
-        // return a random reference point (j-bar)
-        Random random=new Random();
-        return min_rps.get(min_rps.size() > 1 ? random.nextInt(min_rps.size()-1) :0);
-    }
-    public void associate(NSGAIIIDoubleSolutionSet population) {
-        for (int t = 1; t < front.size(); t++) {
-            for (NSGAIIIDoubleSolution s : front.get(t)) {
-                int min_rp = -1;
-                double min_dist = Double.MAX_VALUE;
-                for (int r = 0; r < this.referencePoints.size(); r++) {
-                    double d = perpendicularDistance(this.referencePoints.get(r).position, s);
-                    if (d < min_dist) {
-                        min_dist=d;
-                        min_rp = r;
-                    }
-                }
-                if (t != front.size()) {
-                    this.referencePoints.get(min_rp).AddMember();
-                } else {
-                    this.referencePoints.get(min_rp).AddPotentialMember(s, min_dist);
+   
+    
+    public void associate(MaShOADoubleSolutionSet population) {
+        for(MaShOADoubleSolution ss:this.s.array){
+            int min_rp=-1;
+            double min_dist= Double.MIN_VALUE;
+            for (int r=0; r<this.referencePoints.size();r++){
+                double d= perpendicularDistance(this.referencePoints.get(r).position,ss);
+                if (d<min_dist){
+                    min_dist=d;
+                    min_rp = r;
                 }
             }
-        }
-
+            this.referencePoints.get(min_rp).AddMember();//参考点需要记录自己关联了多少
+            ss.distance=min_dist;
+            ss.setReferencePoint(this.referencePoints.get(min_rp));
+            }
     }
-    public double perpendicularDistance(List<Double> direction, NSGAIIIDoubleSolution point) {
+    public double perpendicularDistance(List<Double> direction, MaShOADoubleSolution point) {
         double numerator = 0, denominator = 0;
         for (int i=0; i<direction.size(); i+=1)
         {
@@ -179,7 +117,7 @@ public class NSGAIIIGeneration extends operator{
         }
         return Math.sqrt(d);
     }
-    public List<Double> constructHyperplane(NSGAIIIDoubleSolutionSet population, List<NSGAIIIDoubleSolution> extreme_points) {
+    public List<Double> constructHyperplane(MaShOADoubleSolutionSet population, List<MaShOADoubleSolution> extreme_points) {
         // Check whether there are duplicate extreme points.
         // This might happen but the original paper does not mention how to deal with it.
         int numberOfObjectives=population.array.get(1).fitness.length;
@@ -210,7 +148,7 @@ public class NSGAIIIGeneration extends operator{
                 b.add(1.0);///？？？？这里为什么是1.0不应该是0.0？？？？
 
             List<List<Double>> A=new ArrayList<>();
-            for (NSGAIIIDoubleSolution s : extreme_points)
+            for (MaShOADoubleSolution s : extreme_points)
             {
                 List<Double> aux = new ArrayList<>();
                 for (int i = 0; i < numberOfObjectives; i++)
@@ -228,14 +166,14 @@ public class NSGAIIIGeneration extends operator{
         }
         return intercepts;
     }
-    private List<NSGAIIIDoubleSolution> findExtremePoints(NSGAIIIDoubleSolutionSet population) {
-        List<NSGAIIIDoubleSolution> extremePoints = new ArrayList<>();
+    private List<MaShOADoubleSolution> findExtremePoints(MaShOADoubleSolutionSet population) {
+        List<MaShOADoubleSolution> extremePoints = new ArrayList<>();
         int numberOfObjectives=population.array.get(1).fitness.length;
-        NSGAIIIDoubleSolution min_indv = null;
+        MaShOADoubleSolution min_indv = null;
         for (int f=0; f < numberOfObjectives; f+=1)
         {
             double min_ASF = Double.MAX_VALUE;
-            for (NSGAIIIDoubleSolution s : front.get(1)) {
+            for (MaShOADoubleSolution s : front.get(1)) {
                 // only consider the individuals in the first front
                 double asf = ASF(s, f);
                 if ( asf < min_ASF ) {
@@ -247,7 +185,7 @@ public class NSGAIIIGeneration extends operator{
         }
         return extremePoints;
     }
-    public List<Double> translateObjectives(NSGAIIIDoubleSolutionSet pop) {
+    public List<Double> translateObjectives(MaShOADoubleSolutionSet pop) {
         List<Double> ideal_point;
         int numberOfObjectives=pop.array.get(1).fitness.length;
         ideal_point = new ArrayList<>(numberOfObjectives);
@@ -262,7 +200,7 @@ public class NSGAIIIGeneration extends operator{
         }
         return ideal_point;
     }
-    private double ASF(NSGAIIIDoubleSolution s, int index) {
+    private double ASF(MaShOADoubleSolution s, int index) {
         //ASF函数
         double max_ratio = Double.NEGATIVE_INFINITY;
         for (int i = 0; i < s.fitness.length; i++) {
@@ -270,6 +208,37 @@ public class NSGAIIIGeneration extends operator{
             max_ratio = Math.max(max_ratio, s.fitness[i]/weight);
         }
         return max_ratio;
+    }
+    public MaShOADoubleSolution SE(MaShOADoubleSolution news){
+        double[] f=new double[s.array.get(0).fitness.length];
+        for (int i=0;i<f.length;i++){
+            f[i]=0;
+        }
+        for (MaShOADoubleSolution ma:s.array){
+            for (int i=0;i<f.length;i++){
+                f[i]+=ma.fitness[i];
+            }
+        }
+        double[] w=new double[s.array.get(0).fitness.length];
+        for (int i=0;i<w.length;i++){
+            w[i]=news.fitness[i]/f[i];
+        }
+        double[] se=new double[s.array.get(0).fitness.length];
+        for (int i=0;i<se.length;i++){
+            if (w[i]==0){
+                se[i]=news.fitness[i]/1e-6;
+            }else{
+                se[i]=news.fitness[i]/w[i];
+            }
+        }
+        double maxse=Double.MAX_VALUE;
+        for (int i=0;i<se.length;i++){
+            if (maxse>se[i]){
+                maxse=se[i];
+            }
+        }
+        news.se=maxse;
+        return news;
     }
     public List<Double> guassianElimination(List<List<Double>> A, List<Double> b) {
         List<Double> x = new ArrayList<>();

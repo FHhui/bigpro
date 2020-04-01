@@ -1,6 +1,7 @@
 package main.Algorithm;
 
 import main.Operator.MaShOADoubleRandominit;
+import main.Operator.MaShOAinitJF;
 import main.Solution.MaShOADoubleSolution;
 import main.Solution.MaShOADoubleSolutionSet;
 import main.Solution.ReferencePoint;
@@ -30,6 +31,11 @@ public class MaShOA extends HyperAlgorithm{
         MaShOADoubleRandominit MDR=new MaShOADoubleRandominit();
         MDS=MDR.execute(MDS,p);
         for (int i=0;i<generation;i++){
+            MaShOAinitJF MSR=new MaShOAinitJF(MDS);
+            MDS=MSR.execute(this.referencePoints,i);
+            //这里是计算完JF的种群
+            //利用JF实现冒泡排序
+            //实际上接下来就是利用JF实现的单目标松鼠
 
         }
         return null;

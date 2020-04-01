@@ -92,6 +92,7 @@ public class NSGAIIIGeneration extends operator{
         associate(s);
         //生成参考向量，计算距离和p
         while (s.size() < maxsize)
+        //当生成玩参考向量之后，进行选择操作
         {
             int min_rp = FindNicheReferencePoint();
 
@@ -107,7 +108,6 @@ public class NSGAIIIGeneration extends operator{
                 s.add(chosen);
             }
         }
-
         //添加，程序结束
         return s;
     }

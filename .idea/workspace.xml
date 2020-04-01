@@ -88,12 +88,12 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.SSA" />
       <item itemvalue="Application.FA" />
       <item itemvalue="Application.MaShOA" />
       <item itemvalue="Application.NSGAIII" />
       <item itemvalue="Application.NSGA" />
       <item itemvalue="Application.NSSSA" />
-      <item itemvalue="Application.SSA" />
     </list>
     <recent_temporary>
       <list>
@@ -195,10 +195,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="472" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1581216261323" />
-    <state x="833" y="237" key="com.intellij.ide.util.TipDialog" timestamp="1585578326619">
+    <state x="833" y="237" key="com.intellij.ide.util.TipDialog" timestamp="1585743548078">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="833" y="237" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1585578326619" />
+    <state x="833" y="237" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1585743548078" />
     <state x="42" y="14" width="685" height="801" key="find.popup" timestamp="1585046852148">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
