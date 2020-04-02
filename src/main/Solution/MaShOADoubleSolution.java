@@ -9,6 +9,8 @@ import java.util.ArrayList;
 public class MaShOADoubleSolution extends solution{
     public double se;
     public double JF;
+    public boolean is_best;
+    public  boolean is_sec_best;
     public DoubleVariable[] variables;//自变量集合
     public double distance;//距离值
     public int nq;//个体被支配数
@@ -24,12 +26,14 @@ public class MaShOADoubleSolution extends solution{
         }
         this.sp=new ArrayList<>();
         this.nq=0;
+        this.is_sec_best=false;
+        this.is_best=false;
     }
     public void setReferencePoint(ReferencePoint<MaShOADoubleSolution> referencePoint){
         this.referencePoint=this.referencePoint;
     }
-    public NSGAIIIDoubleSolution copy(NSGAIIIDoubleSolution s,Hyperproblem p){
-        NSGAIIIDoubleSolution newS = new NSGAIIIDoubleSolution(p);
+    public MaShOADoubleSolution copy(MaShOADoubleSolution s,Hyperproblem p){
+        MaShOADoubleSolution newS = new MaShOADoubleSolution(p);
 
         for (int i=0;i<variables.length;i++){
             newS.variables[i].doubleVariable=s.variables[i].doubleVariable;

@@ -1,9 +1,7 @@
 package main.Operator;
 
-import main.Solution.NSGADoubleSolutionSet;
-import main.Solution.NSGAIIIDoubleSolutionSet;
-import main.Solution.NSSSADoubleSolutionSet;
-import main.Solution.solutionSet;
+import main.Algorithm.MaShOA;
+import main.Solution.*;
 
 import java.util.ArrayList;
 
@@ -225,6 +223,60 @@ public class NSGAFastNonSort extends Sort{
             i++;
         }
         System.out.println("快排结束");
+        return s;
+    }
+    public MaShOADoubleSolutionSet execute(MaShOADoubleSolutionSet s){
+        ArrayList<MaShOADoubleSolutionSet> F= new ArrayList<>();
+        MaShOADoubleSolutionSet fx=new MaShOADoubleSolutionSet(s.size);
+
+        for (int i=0;i<s.size;i++){
+            s.array.get(i).nq=0;
+            s.array.get(i).sp=new ArrayList<>();
+            for (int j=0;j<s.size;j++){
+                int flag1=0;
+                int flag2=0;
+                if (j!=i){
+                    //快速非支配排序
+                    for (int m=0;m<s.array.get(j).fitness.length;m++){
+                        if (s.array.get(i).fitness[m]<s.array.get(j).fitness[m]){
+                            flag1++;
+                        }else if(s.array.get(i).fitness[m]>s.array.get(j).fitness[m]){
+                            flag2++;
+                        }
+                    }
+                    if (flag1==s.array.get(i).fitness.length){
+                        s.array.get(i).sp.add(s.array.get(j));
+                    }else if(flag2==s.array.get(i).fitness.length){
+                        s.array.get(i).nq++;
+                    }
+                }
+
+            }
+            if(s.array.get(i).nq==0){
+                s.array.get(i).rank=1;
+                fx.add(s.array.get(i));
+            }
+
+        }
+        F.add(fx);
+        int i=0;
+        while (F.get(i).array.size()!=0){
+            fx=new MaShOADoubleSolutionSet(s.array.size());
+            for (int j=0;j<F.get(i).size();j++){//对F进行迭代
+                for (int m=0;m<F.get(i).array.get(j).sp.size();m++){
+                    //对F中的个体支配个体集进行迭代
+                    F.get(i).array.get(j).sp.get(m).nq--;
+                    if (F.get(i).array.get(j).sp.get(m).nq==0){
+                        F.get(i).array.get(j).sp.get(m).rank=i+2;
+                        fx.add(F.get(i).array.get(j).sp.get(m));
+                        //System.out.println("123");
+                    }
+                }
+            }
+            F.add(fx);
+            i++;
+        }
+        //System.out.println("快排结束");
         return s;
     }
 }

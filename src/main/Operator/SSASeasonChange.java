@@ -1,7 +1,9 @@
 package main.Operator;
 
+import main.Algorithm.MaShOA;
 import main.Algorithm.NSSSA;
 import main.Algorithm.SSA;
+import main.Solution.MaShOADoubleSolutionSet;
 import main.Solution.NSSSADoubleSolutionSet;
 import main.Solution.SSADoubleSolutionSet;
 import main.Solution.solutionSet;
@@ -103,6 +105,30 @@ public class SSASeasonChange extends operator{
         for (int i=0;i<s.array.size();i++){
             RGAproblem p1=(RGAproblem) p;
             s.array.set(i,p1.evalute(s.array.get(i)));
+        }
+        return s;
+    }
+    public MaShOADoubleSolutionSet execute(MaShOADoubleSolutionSet s,Hyperproblem p,int t,int generation){
+        //具体操作,s是解集，t是当前迭代次数,generation是迭代次数,问题p
+        double Sct = 0;
+        double Smin = 1 / Math.pow(365, 2.5 * t / generation);
+        for (int i = MaShOA.is_best; i < MaShOA.is_best+MaShOA.is_sec_best; i++) {
+            for (int j = 0; j < s.array.get(0).variables.length; j++) {
+                Sct += (s.array.get(i).variables[j].doubleVariable - s.array.get(0).variables[j].doubleVariable)
+                        * (s.array.get(i).variables[j].doubleVariable - s.array.get(0).variables[j].doubleVariable);
+            }
+            Sct = Math.sqrt(Sct);
+        }
+        if (Sct < Smin) {
+            for (int i = MaShOA.is_best+ MaShOA.is_sec_best; i < s.array.size(); i++) {
+                if (s.array.get(i).is_best == false) {
+                    double levy=Levy();
+                    for (int j = 0; j < s.array.get(0).variables.length; j++) {
+                        s.array.get(i).variables[j].doubleVariable=  p.lowerlimit.get(j)+ levy * (p.upperlimit.get(j) - p.lowerlimit.get(j));
+                    }
+                } else
+                    continue;
+            }
         }
         return s;
     }

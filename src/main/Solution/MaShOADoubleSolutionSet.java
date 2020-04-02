@@ -1,5 +1,7 @@
 package main.Solution;
 
+import main.problem.Hyperproblem;
+
 import java.util.ArrayList;
 
 public class MaShOADoubleSolutionSet extends solutionSet{
@@ -15,7 +17,13 @@ public class MaShOADoubleSolutionSet extends solutionSet{
             realsize++;
         }
     } //添加
-
+    public MaShOADoubleSolutionSet copy(Hyperproblem p){
+        MaShOADoubleSolutionSet ans=new MaShOADoubleSolutionSet(array.size());
+        for (MaShOADoubleSolution s:array){
+            ans.add(s.copy(s,p));
+        }
+        return ans;
+    }
     public void remove(MaShOADoubleSolution s){
         array.remove(s);
         realsize--;
