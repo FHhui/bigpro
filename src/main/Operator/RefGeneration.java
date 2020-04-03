@@ -6,26 +6,21 @@ import main.Solution.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
-public class MaShOAinitJF extends operator{
-    HashMap<Integer, ArrayList<MaShOADoubleSolution>> front;
+public class RefGeneration extends operator{
+    //参考点迭代算法
     List<ReferencePoint<MaShOADoubleSolution>> referencePoints;
     MaShOADoubleSolutionSet s;
+    HashMap<Integer, ArrayList<MaShOADoubleSolution>> front;
     ArrayList<MaShOADoubleSolution> front_l;
+    @Override
     public void execute() {
 
     }
-
-    @Override
-    public solutionSet execute(solutionSet s) {
-        return null;
-    }
-    //construct
-    public MaShOAinitJF(MaShOADoubleSolutionSet s){
-
+    public List<ReferencePoint<MaShOADoubleSolution>> run(MaShOADoubleSolutionSet s,List<ReferencePoint<MaShOADoubleSolution>> ref){
+        //参考点迭代算法
         this.s=s;
-        s=new NSGAFastNonSort().execute(s);
+
         this.front=new HashMap<>();
         for (int i=0;i<s.size();i++){
             //首先把帕累托等级给分开
@@ -38,64 +33,66 @@ public class MaShOAinitJF extends operator{
                 front.put(s.array.get(i).rank,front_l);
             }
         }
-    }
-
-
-    public  MaShOADoubleSolutionSet execute(List<ReferencePoint<MaShOADoubleSolution>> ref,int generation){
-        //ArrayList<NSGAIIIDoubleSolution> front=new ArrayList<>();
-        int maxsize=s.size()/2;
         this.referencePoints=ref;
-        //NSGAIIIDoubleSolutionSet newS=new NSGAIIIDoubleSolutionSet(s.size/2);
         List<Double>   ideal_point;//理想点集合
         //寻找ideal point
         ideal_point=translateObjectives(s);
-        //寻找extreme point
         List<MaShOADoubleSolution> extreme_point;//额外点集合
         extreme_point=findExtremePoints(s);
-        //根据extreme point 我们可以利用高斯消去得到截距
         List<Double> intercepts;
         intercepts=constructHyperplane(s,extreme_point);
-        //根据截距，理想点，额外点，我们可以进行函数的标量化
         int numberOfObjectives=s.array.get(1).fitness.length;
 
-            for (MaShOADoubleSolution ss : s.array) {
+        for (MaShOADoubleSolution ss : s.array) {
 
-                for (int f = 0; f < numberOfObjectives; f++) {
-                    if(Math.abs(intercepts.get(f)-ideal_point.get(f))> 10e-10)
-                    {
-                        ss.fitness[f]=(ss.fitness[f]-ideal_point.get(f)) / (intercepts.get(f)-ideal_point.get(f));
-                    }
-                    else
-                    {
-                        ss.fitness[f]=(ss.fitness[f]-ideal_point.get(f)) / (intercepts.get(f)-ideal_point.get(f));
-                    }
-
+            for (int f = 0; f < numberOfObjectives; f++) {
+                if(Math.abs(intercepts.get(f)-ideal_point.get(f))> 10e-10)
+                {
+                    ss.fitness[f]=(ss.fitness[f]-ideal_point.get(f)) / (intercepts.get(f)-ideal_point.get(f));
                 }
+                else
+                {
+                    ss.fitness[f]=(ss.fitness[f]-ideal_point.get(f)) / (intercepts.get(f)-ideal_point.get(f));
+                }
+
             }
+        }
 
         //划分参考点，将参考点带入
         associate(s);
-        //生成参考向量，计算距离和p NSGA-III
-        //这里应该计算成就数值
-        int ref_associate_member_number=0;//参考点关联点数
-        for ( ReferencePoint<MaShOADoubleSolution> ref_point:referencePoints){
-            ref_associate_member_number+=ref_point.MemberSize();
+        for (int i=0;i<referencePoints.size();i++){
+            if (referencePoints.get(i).MemberSize()==0){
+                //无关联的参考点
+                MaShOADoubleSolution m=selectMember();
+                ReferencePoint<MaShOADoubleSolution> mm=new ReferencePoint<MaShOADoubleSolution>(m);
+                referencePoints.set(i,mm);
+            }
         }
-        int avl_ref_ass_number=0;//平均参考点数
-        avl_ref_ass_number=(int) Math.floor(ref_associate_member_number/referencePoints.size());
-        for (MaShOADoubleSolution solution:s.array){
-            solution.RPAA=solution.distance*(solution.referencePoint.MemberSize()/avl_ref_ass_number);
-        }
-        //计算完RPAA后，开始计算SE,同时计算JF
-        for (MaShOADoubleSolution news:s.array){
-            news=SE(news);
-            news.JF=news.se*(1/generation)+generation*(news.RPAA);
-        }
-        return s;
+        return null;
     }
+    public MaShOADoubleSolution selectMember(){
+        //对参考点进行遍历，选择sin值最大的
+            MaShOADoubleSolution best = null;
+            //找最小值
+            double sin=Double.MIN_VALUE;
+            for (int i=0;i<s.array.size();i++){
+                double a=perpendicularDistance(s.array.get(i).referencePoint.position,s.array.get(i));
+                double b=0;
+                for (int j=0;j<s.array.get(i).fitness.length;j++){
+                    b=s.array.get(i).fitness[j]*s.array.get(i).fitness[j];
+                }
+                b=Math.sqrt(b);
+                double ans=b/a;
+                if (ans>sin && s.array.get(i).is_select==false){
+                    sin=ans;
+                    best=s.array.get(i);
+                }
+            }
+            return best;
 
-   
-    
+
+
+    }
     public void associate(MaShOADoubleSolutionSet population) {
         for(MaShOADoubleSolution ss:this.s.array){
             int min_rp=-1;
@@ -110,7 +107,7 @@ public class MaShOAinitJF extends operator{
             this.referencePoints.get(min_rp).AddMember();//参考点需要记录自己关联了多少
             ss.distance=min_dist;
             ss.setReferencePoint(this.referencePoints.get(min_rp));
-            }
+        }
     }
     public double perpendicularDistance(List<Double> direction, MaShOADoubleSolution point) {
         double numerator = 0, denominator = 0;
@@ -210,7 +207,7 @@ public class MaShOAinitJF extends operator{
             ideal_point.add(minf);
         }
         return ideal_point;
-}
+    }
     private double ASF(MaShOADoubleSolution s, int index) {
         //ASF函数
         double max_ratio = Double.NEGATIVE_INFINITY;
@@ -284,5 +281,10 @@ public class MaShOAinitJF extends operator{
             x.set(i, A.get(i).get(N)/A.get(i).get(i));
         }
         return x;
+    }
+
+    @Override
+    public solutionSet execute(solutionSet s) {
+        return null;
     }
 }

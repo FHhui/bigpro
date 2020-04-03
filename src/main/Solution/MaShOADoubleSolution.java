@@ -7,6 +7,7 @@ import main.problem.problem;
 import java.util.ArrayList;
 
 public class MaShOADoubleSolution extends solution{
+    public boolean is_select;
     public double se;
     public double JF;
     public boolean is_best;
@@ -19,7 +20,9 @@ public class MaShOADoubleSolution extends solution{
     public ReferencePoint<MaShOADoubleSolution> referencePoint;//个体关联的最近的参考点
     public ArrayList<MaShOADoubleSolution> sp;//支配集合
     public MaShOADoubleSolution(Hyperproblem p){
+
         super(p);
+        this.is_select=false;
         variables=new DoubleVariable[p.getNumberOfVariables()];
         for (int i=0;i<p.getNumberOfVariables();i++){
             variables[i]=new DoubleVariable();//初始化解

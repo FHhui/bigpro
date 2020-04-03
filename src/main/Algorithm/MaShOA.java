@@ -5,6 +5,7 @@ import main.Solution.MaShOADoubleSolution;
 import main.Solution.MaShOADoubleSolutionSet;
 import main.Solution.ReferencePoint;
 import main.Solution.solutionSet;
+import main.problem.DTLZ1;
 import main.problem.Hyperproblem;
 import main.problem.problem;
 
@@ -36,7 +37,7 @@ public class MaShOA extends HyperAlgorithm{
         MaShOADoubleRandominit MDR=new MaShOADoubleRandominit();
         MDS=MDR.execute(MDS,p);
         for (int i=0;i<generation;i++){
-            MaShOADoubleSolutionSet child=MDS.copy(p);
+            MaShOADoubleSolutionSet parent=MDS.copy(p);
             MaShOAinitJF MSR=new MaShOAinitJF(MDS);
             MDS=MSR.execute(this.referencePoints,i);
             //这里是计算完JF的种群
@@ -56,8 +57,28 @@ public class MaShOA extends HyperAlgorithm{
             SSASeasonChange SC=new SSASeasonChange();
             MDS=SC.execute(MDS,p,i,generation);
             //松鼠跳跃部分实现完毕
+            //父子代迭代得到正确的解
+            MaShOAGeneration MOG=new MaShOAGeneration();
+            MDS=MOG.execute(parent,MDS,p,this.referencePoints,i);
+            //MDS就是解
             //参考点迭代的部分
-
+            DTLZ1 mp=(DTLZ1)p;
+            for (int g=0;g<MDS.size;g++){
+                MaShOADoubleSolution a=mp.eval(MDS.array.get(g));
+                MDS.array.set(g,a);
+            }
+            //重新计算fitness
+            MDS=new NSGAFastNonSort().execute(MDS);
+            for (MaShOADoubleSolution a:MDS.array){
+                if (a.rank==1){
+                    for (int h=0;h<a.fitness.length;h++){
+                        System.out.println(a.fitness[h]);
+                    }
+                    System.out.println(" ");
+                }
+            }
+            RefGeneration RG=new RefGeneration();
+            this.referencePoints=RG.run(MDS,referencePoints);
         }
         return null;
 

@@ -22,6 +22,14 @@ public class ReferencePoint<S extends solution> {
         memberSize = 0;
         potentialMembers = new ArrayList<>();
     }
+    public ReferencePoint(MaShOADoubleSolution point) {
+        position = new ArrayList<>(point.fitness.length);
+        for (Double d : point.fitness) {
+            position.add(new Double(d));
+        }
+        memberSize = 0;
+        potentialMembers = new ArrayList<>();
+    }
 
     public ReferencePoint(ReferencePoint<S> point) {
         position = new ArrayList<>(point.position.size());
