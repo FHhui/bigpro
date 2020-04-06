@@ -196,10 +196,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="472" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1581216261323" />
-    <state x="833" y="237" key="com.intellij.ide.util.TipDialog" timestamp="1585915370156">
+    <state x="833" y="237" key="com.intellij.ide.util.TipDialog" timestamp="1585973370198">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="833" y="237" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1585915370156" />
+    <state x="833" y="237" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1585973370198" />
     <state x="42" y="14" width="685" height="801" key="find.popup" timestamp="1585046852148">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -220,5 +220,16 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="814" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1585046859096" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/Algorithm/NSSSA.java</url>
+          <line>78</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
