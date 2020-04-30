@@ -50,29 +50,41 @@ HashMap<Integer, ArrayList<MaShOADoubleSolution>> front;
         }
         }
         //向新种群依次添加，直到第l层，并将第l层的也添加进去
+        MaShOAinitJF initJF=new MaShOAinitJF(s);
+        //重新计算JF
+        s=initJF.execute(ref,generation);
         int rankingIndex=1;//表示第几层,因为是从帕累托等级为1开始的，所以，你懂的
         int candidateSolutions=0;
         ArrayList<MaShOADoubleSolution> newS=new ArrayList<>();
         while(candidateSolutions<maxsize){
             candidateSolutions+=front.get(rankingIndex).size();
-            front_l = front.get(rankingIndex);
-            for (int i = 0 ; i < front_l.size(); i++) {
-                newS.add(front_l.get(i));
+            if ((newS.size()+front.get(rankingIndex).size()<=maxsize)){
+                //如果没有溢出就往里面添加
+                front_l = front.get(rankingIndex);
+                for (int i = 0 ; i < front_l.size(); i++) {
+                    newS.add(front_l.get(i));
+                }
+                rankingIndex++;
             }
         }
+        front_l = front.get(rankingIndex);
         //根据JF进行排序并且取前L个
-        MaShOADoubleSolutionSet S=new MaShOADoubleSolutionSet(newS.size());
-        for (MaShOADoubleSolution ss:newS){
+        MaShOADoubleSolutionSet S=new MaShOADoubleSolutionSet(front_l.size());
+        for (MaShOADoubleSolution ss:front_l){
             S.add(ss);
         }
-        MaShOAinitJF initJF=new MaShOAinitJF(S);
-        //重新计算JF
-        S=initJF.execute(ref,generation);
+//        MaShOAinitJF initJF=new MaShOAinitJF(S);
+//        //重新计算JF
+//        S=initJF.execute(ref,generation);
         SortMaoPao sm=new SortMaoPao();
-        S=sm.run(S);
+        S=sm.run(S,p);
         MaShOADoubleSolutionSet ans=new MaShOADoubleSolutionSet(maxsize);
         for (int i=0;i<maxsize;i++){
-         ans.add(S.array.get(i));
+            if (i<newS.size()){
+                ans.add(newS.get(i));
+            }else {
+                ans.add(S.array.get(i-newS.size()));
+            }
         }
         return ans;
 }

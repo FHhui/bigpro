@@ -1,7 +1,9 @@
 package main.problem;
 
+import main.Algorithm.MaShOA;
 import main.Operator.NSSSADoubleSolution;
 import main.Solution.DoubleVariable;
+import main.Solution.MaShOADoubleSolution;
 import main.Solution.NSGAIIIDoubleSolution;
 import main.Solution.solution;
 
@@ -11,9 +13,9 @@ public class DTLZ1 extends Hyperproblem{
     //DTLZ1测试函数，没有错这就是一个三维函数
     public DTLZ1(){
         super();
-        this.numberOfVariables=10;
+        this.numberOfVariables=12;
         this.lowerlimit=new ArrayList<>();
-
+        this.numberOfObjectives=3;
         this.upperlimit=new ArrayList<>();
 
         for (int i=0;i<this.numberOfVariables;i++){
@@ -63,10 +65,9 @@ public class DTLZ1 extends Hyperproblem{
             }
         return solution;
     }
-    public <S extends solution> S eval(S solution){
+    public MaShOADoubleSolution eval(MaShOADoubleSolution solution){
         int numberOfVariables = solution.variables.length;
         int numberOfObjectives = solution.fitness.length ;
-
         double[] f = new double[numberOfObjectives];
         DoubleVariable[] x = new DoubleVariable[numberOfVariables] ;
 
@@ -101,7 +102,7 @@ public class DTLZ1 extends Hyperproblem{
         for (int i = 0; i < numberOfObjectives; i++) {
             solution.fitness[i]= f[i];
         }
-        return (S)solution;
+        return solution;
     }
     public NSGAIIIDoubleSolution evalute(NSGAIIIDoubleSolution solution){
         //计算多目标松鼠适应值,改泛型改泛型改泛型重要的事情说三遍

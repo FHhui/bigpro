@@ -20,7 +20,6 @@ public class MaShOADoubleSolution extends solution{
     public ReferencePoint<MaShOADoubleSolution> referencePoint;//个体关联的最近的参考点
     public ArrayList<MaShOADoubleSolution> sp;//支配集合
     public MaShOADoubleSolution(Hyperproblem p){
-
         super(p);
         this.is_select=false;
         variables=new DoubleVariable[p.getNumberOfVariables()];
@@ -33,7 +32,7 @@ public class MaShOADoubleSolution extends solution{
         this.is_best=false;
     }
     public void setReferencePoint(ReferencePoint<MaShOADoubleSolution> referencePoint){
-        this.referencePoint=this.referencePoint;
+        this.referencePoint=referencePoint;
     }
     public MaShOADoubleSolution copy(MaShOADoubleSolution s,Hyperproblem p){
         MaShOADoubleSolution newS = new MaShOADoubleSolution(p);

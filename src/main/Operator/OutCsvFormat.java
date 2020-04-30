@@ -20,7 +20,7 @@ public class OutCsvFormat extends Out{
             csvWriter.writeRecord(csvHeaders);
             // 写内容
             SortMaoPao bubble=new SortMaoPao();
-            s=bubble.run(s);
+            //s=bubble.run(s);
             for (int i = 0; i < s.size(); i++) {
                 double best=s.array.get(0).fitness[0];
                 double a=(double)s.size();

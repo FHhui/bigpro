@@ -1,9 +1,9 @@
 package main.Algorithm;
 /*
-* author:FHhui
-* description:MaShOA which has been changed something important
-* date:2020.4.26
-* */
+ * author:FHhui
+ * description:MaShOA which has been changed something important
+ * date:2020.4.26
+ * */
 
 import main.Operator.*;
 import main.Solution.MaShOADoubleSolution;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-public class MaShOA extends HyperAlgorithm{
+public class MaShOA2 extends HyperAlgorithm{
     //超多目标松鼠算法
     int generation;
     int popsize;
@@ -28,7 +28,8 @@ public class MaShOA extends HyperAlgorithm{
     Hyperproblem p;
     Vector<Integer> numberofDivisions;
     List<ReferencePoint<MaShOADoubleSolution>> referencePoints=new Vector<>();
-    public MaShOA(int generation,int popsize,Hyperproblem p){
+    public MaShOA2(int generation,int popsize,Hyperproblem p){
+        //构造方法的初始化
         this.generation=generation;
         this.p=p;
         this.popsize=popsize;
@@ -46,6 +47,7 @@ public class MaShOA extends HyperAlgorithm{
         for (int i=0;i<generation;i++){
             MaShOADoubleSolutionSet parent=MDS.copy(p);
             MaShOAinitJF MSR=new MaShOAinitJF(MDS);
+            //初始化JF函数,所以在这里我需要记录一下JF函数的两个因素
             MDS=MSR.execute(this.referencePoints,i);
             //这里是计算完JF的种群
             //利用JF实现冒泡排序
@@ -108,7 +110,7 @@ public class MaShOA extends HyperAlgorithm{
     }
     public static void main(String args[]){
         DTLZ1 p=new DTLZ1();
-        MaShOA test=new MaShOA(1000,92,p);
+        MaShOA test=new MaShOA(100,92,p);
         test.getResult();
     }
 }

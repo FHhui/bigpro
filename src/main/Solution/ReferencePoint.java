@@ -26,6 +26,7 @@ public class ReferencePoint<S extends solution> {
         position = new ArrayList<>(point.fitness.length);
         for (Double d : point.fitness) {
             position.add(new Double(d));
+
         }
         memberSize = 0;
         potentialMembers = new ArrayList<>();

@@ -7,24 +7,21 @@ import java.util.ArrayList;
 public class ZDT6problem extends Multiproblem{
     public ZDT6problem() {
         super();
-        this.numberOfConstraints=10;
+        this.numberOfObjectives=2;
+        this.numberOfVariables=10;
         this.lowerlimit=new ArrayList<>();
-
         this.upperlimit=new ArrayList<>();
-
         for (int i=0;i<this.numberOfVariables;i++){
             lowerlimit.add(0.0);
             upperlimit.add(1.0);
         }
     }
-    public NSSSADoubleSolution evaluate(NSSSADoubleSolution solution) {
+    public NSSSADoubleSolution evalute(NSSSADoubleSolution solution) {
         double[] f = new double[getNumberOfObjectives()];
-
         f[0] = solution.variables[0].getDoubleVariable();
         double g = this.evalG(solution);
         double h = this.evalH(f[0], g);
         f[1] = h * g;
-
         solution.fitness[0] = f[0];
         solution.fitness[1] = f[1];
         return solution;

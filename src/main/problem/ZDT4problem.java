@@ -8,6 +8,7 @@ public class ZDT4problem extends Multiproblem{
     //多目标问题zdt4
     public ZDT4problem(){
         super();
+        this.numberOfObjectives=2;
         this.numberOfVariables=10;
         this.lowerlimit=new ArrayList<>();
         lowerlimit.add(0.0);

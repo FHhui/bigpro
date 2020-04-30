@@ -25,7 +25,6 @@ public class NSGAIIIGeneration extends operator{
             //首先把帕累托等级给分开
             if (front.keySet(). contains ( s.array.get(i).rank)){
                 front.get(s.array.get(i).rank).add(s.array.get(i));
-
             } else{
                 front_l=new ArrayList<>();
                 front_l.add(s.array.get(i));
@@ -58,7 +57,9 @@ public class NSGAIIIGeneration extends operator{
                 for (int i = 0 ; i < front_l.size(); i++) {
                     newS.add(front_l.get(i));
                 }
+                rankingIndex++;
             }
+
         }
         List<Double>   ideal_point;//理想点集合
         //寻找ideal point

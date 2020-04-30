@@ -20,7 +20,6 @@ public class RefGeneration extends operator{
     public List<ReferencePoint<MaShOADoubleSolution>> run(MaShOADoubleSolutionSet s,List<ReferencePoint<MaShOADoubleSolution>> ref){
         //参考点迭代算法
         this.s=s;
-
         this.front=new HashMap<>();
         for (int i=0;i<s.size();i++){
             //首先把帕累托等级给分开
@@ -42,22 +41,25 @@ public class RefGeneration extends operator{
         List<Double> intercepts;
         intercepts=constructHyperplane(s,extreme_point);
         int numberOfObjectives=s.array.get(1).fitness.length;
-
         for (MaShOADoubleSolution ss : s.array) {
-
             for (int f = 0; f < numberOfObjectives; f++) {
                 if(Math.abs(intercepts.get(f)-ideal_point.get(f))> 10e-10)
                 {
                     ss.fitness[f]=(ss.fitness[f]-ideal_point.get(f)) / (intercepts.get(f)-ideal_point.get(f));
+//                    if (ss.fitness[f]<0){
+//                        ss.fitness[f]=-ss.fitness[f];
+//                    }
                 }
                 else
                 {
-                    ss.fitness[f]=(ss.fitness[f]-ideal_point.get(f)) / (intercepts.get(f)-ideal_point.get(f));
+                    ss.fitness[f]=(ss.fitness[f]-ideal_point.get(f)) / (10e-10);
+//                    if (ss.fitness[f]<0){
+//                        ss.fitness[f]=-ss.fitness[f];
+//                    }
                 }
 
             }
         }
-
         //划分参考点，将参考点带入
         associate(s);
         for (int i=0;i<referencePoints.size();i++){
@@ -68,7 +70,11 @@ public class RefGeneration extends operator{
                 referencePoints.set(i,mm);
             }
         }
-        return null;
+        //更新所有的参考点
+        for (ReferencePoint<MaShOADoubleSolution> point:referencePoints){
+            point=new ReferencePoint<>(point);
+        }
+        return referencePoints;
     }
     public MaShOADoubleSolution selectMember(){
         //对参考点进行遍历，选择sin值最大的
@@ -96,7 +102,7 @@ public class RefGeneration extends operator{
     public void associate(MaShOADoubleSolutionSet population) {
         for(MaShOADoubleSolution ss:this.s.array){
             int min_rp=-1;
-            double min_dist= Double.MIN_VALUE;
+            double min_dist= Double.MAX_VALUE;
             for (int r=0; r<this.referencePoints.size();r++){
                 double d= perpendicularDistance(this.referencePoints.get(r).position,ss);
                 if (d<min_dist){
@@ -198,12 +204,12 @@ public class RefGeneration extends operator{
         int numberOfObjectives=pop.array.get(1).fitness.length;
         ideal_point = new ArrayList<>(numberOfObjectives);
 
-        for (int f=0; f<numberOfObjectives; f+=1){
+        for (int f=0; f<numberOfObjectives; f++){
             double minf = Double.MAX_VALUE;
-            for (int i=0; i<front.get(1).size(); i+=1) // min values must appear in the first front
+            for (int i=0; i<pop.array.size(); i++)
             {
-                minf = Math.min(minf, front.get(1).get(i).fitness[f]);
-            }
+                minf = Math.min(minf, pop.array.get(i).fitness[f]);
+        }
             ideal_point.add(minf);
         }
         return ideal_point;
@@ -217,6 +223,7 @@ public class RefGeneration extends operator{
         }
         return max_ratio;
     }
+
     public MaShOADoubleSolution SE(MaShOADoubleSolution news){
         double[] f=new double[s.array.get(0).fitness.length];
         for (int i=0;i<f.length;i++){

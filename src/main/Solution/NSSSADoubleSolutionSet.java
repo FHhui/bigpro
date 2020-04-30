@@ -1,6 +1,7 @@
 package main.Solution;
 
 import main.Operator.NSSSADoubleSolution;
+import main.problem.Multiproblem;
 
 import java.util.ArrayList;
 //多目标松鼠的解集类
@@ -10,6 +11,13 @@ public class NSSSADoubleSolutionSet extends solutionSet {
     public int size;
     double best;
     int whichbest;
+    public NSSSADoubleSolutionSet copy(Multiproblem p){
+        NSSSADoubleSolutionSet ans=new NSSSADoubleSolutionSet(array.size());
+        for (NSSSADoubleSolution s:array){
+            ans.add(s.copy(s,p));
+        }
+        return ans;
+    }
     public void add(NSSSADoubleSolution s){
         if (realsize<size){
             array.add(s);

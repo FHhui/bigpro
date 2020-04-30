@@ -1,8 +1,9 @@
 package main.Operator;
-
+//初始化JF的类
 import main.Algorithm.MaShOA;
 import main.Solution.*;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,8 @@ public class MaShOAinitJF extends operator{
     List<ReferencePoint<MaShOADoubleSolution>> referencePoints;
     MaShOADoubleSolutionSet s;
     ArrayList<MaShOADoubleSolution> front_l;
+    double a=0.5;
+    int gmax=100;
     public void execute() {
 
     }
@@ -23,7 +26,6 @@ public class MaShOAinitJF extends operator{
     }
     //construct
     public MaShOAinitJF(MaShOADoubleSolutionSet s){
-
         this.s=s;
         s=new NSGAFastNonSort().execute(s);
         this.front=new HashMap<>();
@@ -39,13 +41,8 @@ public class MaShOAinitJF extends operator{
             }
         }
     }
-
-
     public  MaShOADoubleSolutionSet execute(List<ReferencePoint<MaShOADoubleSolution>> ref,int generation){
-        //ArrayList<NSGAIIIDoubleSolution> front=new ArrayList<>();
-        int maxsize=s.size()/2;
         this.referencePoints=ref;
-        //NSGAIIIDoubleSolutionSet newS=new NSGAIIIDoubleSolutionSet(s.size/2);
         List<Double>   ideal_point;//理想点集合
         //寻找ideal point
         ideal_point=translateObjectives(s);
@@ -57,9 +54,7 @@ public class MaShOAinitJF extends operator{
         intercepts=constructHyperplane(s,extreme_point);
         //根据截距，理想点，额外点，我们可以进行函数的标量化
         int numberOfObjectives=s.array.get(1).fitness.length;
-
             for (MaShOADoubleSolution ss : s.array) {
-
                 for (int f = 0; f < numberOfObjectives; f++) {
                     if(Math.abs(intercepts.get(f)-ideal_point.get(f))> 10e-10)
                     {
@@ -67,7 +62,7 @@ public class MaShOAinitJF extends operator{
                     }
                     else
                     {
-                        ss.fitness[f]=(ss.fitness[f]-ideal_point.get(f)) / (intercepts.get(f)-ideal_point.get(f));
+                        ss.fitness[f]=(ss.fitness[f]-ideal_point.get(f)) / (10e-10);
                     }
 
                 }
@@ -78,18 +73,54 @@ public class MaShOAinitJF extends operator{
         //生成参考向量，计算距离和p NSGA-III
         //这里应该计算成就数值
         int ref_associate_member_number=0;//参考点关联点数
+
         for ( ReferencePoint<MaShOADoubleSolution> ref_point:referencePoints){
             ref_associate_member_number+=ref_point.MemberSize();
         }
+
         int avl_ref_ass_number=0;//平均参考点数
         avl_ref_ass_number=(int) Math.floor(ref_associate_member_number/referencePoints.size());
+
         for (MaShOADoubleSolution solution:s.array){
-            solution.RPAA=solution.distance*(solution.referencePoint.MemberSize()/avl_ref_ass_number);
+            solution.RPAA=(solution.distance+1)*(solution.referencePoint.MemberSize()/avl_ref_ass_number);
+            //System.out.println("distance:"+solution.distance+);
+            File file_distance=new File("D://distance.txt");
+            File file_ref_num=new File("D://ref_num.txt");
+            File file_RPAA=new File("D://file_RPAA.txt");
+
+            try {
+                //将RPAA distance与pj都写入了文件当中这样就可以比较大概的值了
+                FileWriter fr_dis=new FileWriter(file_distance,true);
+                BufferedWriter bf_dis=new BufferedWriter(fr_dis);
+                bf_dis.append(String.valueOf(solution.distance)+"\n");
+                //bf_dis.newLine();
+                bf_dis.close();
+
+                FileWriter fr_ref_num=new FileWriter(file_ref_num,true);
+                BufferedWriter bf_ref_num=new BufferedWriter(fr_ref_num);
+                bf_ref_num.append(String.valueOf(solution.referencePoint.MemberSize()/avl_ref_ass_number)+"\n");
+                bf_ref_num.newLine();
+                bf_ref_num.close();
+
+                FileWriter fr_RPAA=new FileWriter(file_RPAA,true);
+                BufferedWriter bf_RPAA=new BufferedWriter(fr_RPAA);
+                bf_RPAA.append(String.valueOf(solution.RPAA) );
+                bf_RPAA.append("\n" );
+                //bf_RPAA.newLine();
+                bf_RPAA.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
+
         //计算完RPAA后，开始计算SE,同时计算JF
+
         for (MaShOADoubleSolution news:s.array){
             news=SE(news);
-            news.JF=news.se*(1/generation)+generation*(news.RPAA);
+            //news.JF=news.se*(1/(generation+1))+generation*(news.RPAA);
+            news.JF=((Math.pow(generation/gmax,a))*news.RPAA+1)*news.rank;
         }
         return s;
     }
@@ -99,16 +130,18 @@ public class MaShOAinitJF extends operator{
     public void associate(MaShOADoubleSolutionSet population) {
         for(MaShOADoubleSolution ss:this.s.array){
             int min_rp=-1;
-            double min_dist= Double.MIN_VALUE;
+            double min_dist= Double.MAX_VALUE;
             for (int r=0; r<this.referencePoints.size();r++){
                 double d= perpendicularDistance(this.referencePoints.get(r).position,ss);
+                //System.out.println(d);
                 if (d<min_dist){
                     min_dist=d;
                     min_rp = r;
                 }
             }
+            //System.out.println(min_rp);
             this.referencePoints.get(min_rp).AddMember();//参考点需要记录自己关联了多少
-            ss.distance=min_dist;
+
             ss.setReferencePoint(this.referencePoints.get(min_rp));
             }
     }
@@ -201,11 +234,11 @@ public class MaShOAinitJF extends operator{
         int numberOfObjectives=pop.array.get(1).fitness.length;
         ideal_point = new ArrayList<>(numberOfObjectives);
 
-        for (int f=0; f<numberOfObjectives; f+=1){
+        for (int f=0; f<numberOfObjectives; f++){
             double minf = Double.MAX_VALUE;
-            for (int i=0; i<front.get(1).size(); i+=1) // min values must appear in the first front
+            for (int i=0; i<pop.array.size(); i++) // min values must appear in the first front
             {
-                minf = Math.min(minf, front.get(1).get(i).fitness[f]);
+                minf = Math.min(minf, pop.array.get(i).fitness[f]);
             }
             ideal_point.add(minf);
         }
