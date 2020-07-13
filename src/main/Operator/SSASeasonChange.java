@@ -122,7 +122,7 @@ public class SSASeasonChange extends operator{
             }
         }
         if (Sct < Smin) {
-            System.out.println("this is winter!");
+            System.out.println("Sct:"+Sct+"Smin:"+Smin);
             for (int i = MaShOA.is_best+ MaShOA.is_sec_best; i < s.array.size(); i++) {
                 if (s.array.get(i).is_best == false) {
                     double levy=Levy();

@@ -10,9 +10,7 @@ import main.Solution.MaShOADoubleSolution;
 import main.Solution.MaShOADoubleSolutionSet;
 import main.Solution.ReferencePoint;
 import main.Solution.solutionSet;
-import main.problem.DTLZ1;
-import main.problem.Hyperproblem;
-import main.problem.problem;
+import main.problem.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +36,13 @@ public class MaShOA extends HyperAlgorithm{
         numberofDivisions.add(12);
         (new ReferencePoint<MaShOADoubleSolution>()).generateReferencePoints(referencePoints,p.getNumberOfObjectives(), numberofDivisions);
     }
-    public MaShOADoubleSolutionSet getResult() {
+    public double getResult() {
         MaShOADoubleSolutionSet MDS=new MaShOADoubleSolutionSet(popsize);
         MaShOADoubleRandominit MDR=new MaShOADoubleRandominit();
         //随机初始化
+        //XUYAO
         MDS=MDR.execute(MDS,p);
+
         for (int i=0;i<generation;i++){
             MaShOADoubleSolutionSet parent=MDS.copy(p);
             MaShOAinitJF MSR=new MaShOAinitJF(MDS);
@@ -66,24 +66,31 @@ public class MaShOA extends HyperAlgorithm{
             //松鼠跳跃部分实现完毕
             //父子代迭代得到正确的解
             MaShOAGeneration MOG=new MaShOAGeneration();
+
+            //XUYAO
             MDS=MOG.execute(parent,MDS,p,this.referencePoints,i);
             //MDS就是解
             //参考点迭代的部分
-            DTLZ1 mp=(DTLZ1)p;
+            /*
+            * 需要替换部分
+            * */
+            WFG9 mp=(WFG9)p;
+
             for (int g=0;g<MDS.size;g++){
-                MaShOADoubleSolution a=mp.eval(MDS.array.get(g));
+                MaShOADoubleSolution a=mp.evaluate(MDS.array.get(g));
                 MDS.array.set(g,a);
             }
             //重新计算fitness
+
             MDS=new NSGAFastNonSort().execute(MDS);
             //参考点迭代这里，应该将其他所有的参考点都给更新起来，类似于jmetal的副本操作
             RefGeneration RG=new RefGeneration();
             this.referencePoints=RG.run(MDS,referencePoints);
             System.out.println(i);
         }
-        DTLZ1 mp=(DTLZ1)p;
+        WFG9 mp=(WFG9)p;
         for (int g=0;g<MDS.size;g++){
-            MaShOADoubleSolution a=mp.eval(MDS.array.get(g));
+            MaShOADoubleSolution a=mp.evaluate(MDS.array.get(g));
             MDS.array.set(g,a);
         }
         MDS=new NSGAFastNonSort().execute(MDS);
@@ -97,9 +104,10 @@ public class MaShOA extends HyperAlgorithm{
         for (MaShOADoubleSolution a:sss){
             MDS.add(a);
         }
+        //XUYAO
         evalute e=new evalute();
         System.out.println(e.execute(MDS));
-        return null;
+        return e.execute(MDS);
     }
 
     @Override
@@ -107,8 +115,29 @@ public class MaShOA extends HyperAlgorithm{
         return super.run(p);
     }
     public static void main(String args[]){
-        DTLZ1 p=new DTLZ1();
-        MaShOA test=new MaShOA(1000,92,p);
+        WFG9 p=new WFG9(5,5,3);
+        MaShOA test=new MaShOA(100,92,p);
         test.getResult();
+    }
+    double POP_Variance(double[] data) {
+        double variance = 0;
+        for (int i = 0; i < data.length; i++) {
+            variance = 0;
+            variance = variance + (Math.pow((data[i] - Mean(data)), 2));
+        }
+        variance = variance / data.length;
+        return variance;
+    }
+
+    double Sum(double[] data) {
+        double sum = 0;
+        for (int i = 0; i < data.length; i++)
+            sum = sum + data[i];
+        return sum;
+    }
+    double Mean(double[] data) {
+        double mean = 0;
+        mean = Sum(data) / data.length;
+        return mean;
     }
 }

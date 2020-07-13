@@ -76,7 +76,6 @@ public class DTLZ1 extends Hyperproblem{
         for (int i = 0; i < numberOfVariables; i++) {
 
             x[i] = (DoubleVariable) solution.variables[i];
-            //System.out.println(x[i]);
         }
 
         double g = 0.0;

@@ -2,8 +2,7 @@ package main.Operator;
 
 import main.Algorithm.MaShOA;
 import main.Solution.*;
-import main.problem.DTLZ1;
-import main.problem.Hyperproblem;
+import main.problem.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,10 +27,14 @@ HashMap<Integer, ArrayList<MaShOADoubleSolution>> front;
                 s.add(child.array.get(i-parent.array.size()));
             }
         }
-        DTLZ1 mp=(DTLZ1)p;
+        /*
+        * 需要手动替换点
+        *
+        * */
+        WFG9 mp=(WFG9) p;
         for (int i=0;i<s.array.size();i++){
             MaShOADoubleSolution ansm=s.array.get(i);
-            ansm=mp.eval(ansm);
+            ansm=mp.evaluate(ansm);
             s.array.set(i,ansm);
         }
         //快速非支配排序

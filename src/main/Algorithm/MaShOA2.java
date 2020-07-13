@@ -39,7 +39,7 @@ public class MaShOA2 extends HyperAlgorithm{
         numberofDivisions.add(12);
         (new ReferencePoint<MaShOADoubleSolution>()).generateReferencePoints(referencePoints,p.getNumberOfObjectives(), numberofDivisions);
     }
-    public MaShOADoubleSolutionSet getResult() {
+    public double getResult() {
         MaShOADoubleSolutionSet MDS=new MaShOADoubleSolutionSet(popsize);
         MaShOADoubleRandominit MDR=new MaShOADoubleRandominit();
         //随机初始化
@@ -81,7 +81,7 @@ public class MaShOA2 extends HyperAlgorithm{
             //参考点迭代这里，应该将其他所有的参考点都给更新起来，类似于jmetal的副本操作
             RefGeneration RG=new RefGeneration();
             this.referencePoints=RG.run(MDS,referencePoints);
-            System.out.println(i);
+            //System.out.println(i);
         }
         DTLZ1 mp=(DTLZ1)p;
         for (int g=0;g<MDS.size;g++){
@@ -101,7 +101,7 @@ public class MaShOA2 extends HyperAlgorithm{
         }
         evalute e=new evalute();
         System.out.println(e.execute(MDS));
-        return null;
+        return e.execute(MDS);
     }
 
     @Override
@@ -109,8 +109,35 @@ public class MaShOA2 extends HyperAlgorithm{
         return super.run(p);
     }
     public static void main(String args[]){
-        DTLZ1 p=new DTLZ1();
-        MaShOA test=new MaShOA(100,92,p);
-        test.getResult();
+        double avl=0;
+        double[] fangcha=new double[10];
+        for (int i=0;i<10;i++){
+            DTLZ1 p=new DTLZ1();
+            MaShOA test=new MaShOA(100,92,p);
+            fangcha[i]=test.getResult();
+            avl+=fangcha[i];
+        }
+        System.out.println("平均数为"+avl/10);
+        System.out.println("方差为"+(new MaShOA2(100,92,new Hyperproblem())).POP_Variance(fangcha));
+    }
+    double POP_Variance(double[] data) {
+        double variance = 0;
+        for (int i = 0; i < data.length; i++) {
+            variance = variance + (Math.pow((data[i] - Mean(data)), 2));
+        }
+        variance = variance / data.length;
+        return variance;
+    }
+
+    double Sum(double[] data) {
+        double sum = 0;
+        for (int i = 0; i < data.length; i++)
+            sum = sum + data[i];
+        return sum;
+    }
+    double Mean(double[] data) {
+        double mean = 0;
+        mean = Sum(data) / data.length;
+        return mean;
     }
 }

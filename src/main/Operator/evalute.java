@@ -20,7 +20,7 @@ public class evalute extends operator{
     }
     public double execute(MaShOADoubleSolutionSet s){
         double gd=0;
-        File file = new File("D:\\DTLZ1.txt");//定义一个file对象，用来初始化FileReader
+        File file = new File("D:\\WFG9.3D.pf");//定义一个file对象，用来初始化FileReader
 
         FileReader reader = null;//定义一个fileReader对象，用来初始化BufferedReader
         try {

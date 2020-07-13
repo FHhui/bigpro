@@ -9,7 +9,6 @@ public  class solution implements Serializable {
     public double[] fitness;//适应值集合,该集合的大小有问题的numberofobjective决定
     // /自变量集合
     public variable[] variables;
-
     public solution(problem p){
         fitness=new double[p.getNumberOfObjectives()];
     }
