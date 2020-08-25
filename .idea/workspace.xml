@@ -41,7 +41,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.MaShOA">
+  <component name="RunManager" selected="Application.SSA_TSP">
     <configuration name="MaShOA" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.Algorithm.MaShOA" />
       <module name="bigpro" />
@@ -81,7 +81,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NSGAIII (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="NSGAIII" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.Algorithm.NSGAIII" />
       <module name="bigpro" />
       <extension name="coverage">
@@ -110,19 +110,32 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SSA_TSP" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="main.Algorithm.SSA_TSP" />
+      <module name="bigpro" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.Algorithm.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.MaShOA" />
       <item itemvalue="Application.SSA" />
       <item itemvalue="Application.MaShOA2" />
       <item itemvalue="Application.MoSSA" />
-      <item itemvalue="Application.NSGAIII (1)" />
       <item itemvalue="Application.NSGAIII" />
+      <item itemvalue="Application.SSA_TSP" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.SSA_TSP" />
         <item itemvalue="Application.MaShOA2" />
         <item itemvalue="Application.MoSSA" />
-        <item itemvalue="Application.NSGAIII (1)" />
         <item itemvalue="Application.NSGAIII" />
       </list>
     </recent_temporary>
@@ -153,41 +166,51 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="499" y="168" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog" timestamp="1586250369899">
+    <state x="958" y="97" key="#com.intellij.ide.util.MemberChooser" timestamp="1598078817721">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="499" y="168" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1586250369899" />
-    <state x="958" y="97" key="#com.intellij.ide.util.MemberChooser" timestamp="1593691108912">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="958" y="97" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1593691108912" />
+    <state x="958" y="97" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1598078817721" />
     <state x="548" y="297" width="439" height="239" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1593691837674">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="548" y="297" width="439" height="239" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1536.824@0.0.1536.824" timestamp="1593691837674" />
-    <state width="1493" height="257" key="GridCell.Tab.0.bottom" timestamp="1594440017712">
+    <state width="1493" height="128" key="GridCell.Tab.0.bottom" timestamp="1598347595742">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="257" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1594440017712" />
-    <state width="1493" height="257" key="GridCell.Tab.0.center" timestamp="1594440017712">
+    <state width="1493" height="128" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1598347595742" />
+    <state width="1493" height="128" key="GridCell.Tab.0.center" timestamp="1598347595742">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="257" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1594440017712" />
-    <state width="1493" height="257" key="GridCell.Tab.0.left" timestamp="1594440017712">
+    <state width="1493" height="128" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1598347595742" />
+    <state width="1493" height="128" key="GridCell.Tab.0.left" timestamp="1598347595742">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="257" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1594440017712" />
-    <state width="1493" height="257" key="GridCell.Tab.0.right" timestamp="1594440017712">
+    <state width="1493" height="128" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1598347595742" />
+    <state width="1493" height="128" key="GridCell.Tab.0.right" timestamp="1598347595742">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="257" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1594440017712" />
-    <state x="833" y="237" key="com.intellij.ide.util.TipDialog" timestamp="1594346286691">
+    <state width="1493" height="128" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1598347595742" />
+    <state x="833" y="237" key="com.intellij.ide.util.TipDialog" timestamp="1598318930428">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="833" y="237" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1594346286691" />
+    <state x="833" y="237" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1598318930428" />
     <state x="178" y="114" key="new project wizard" timestamp="1593653693132">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="178" y="114" key="new project wizard/0.0.1536.824@0.0.1536.824" timestamp="1593653693132" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/Operator/SSANewDisplacePlace.java</url>
+          <line>26</line>
+          <properties class="main.Operator.SSANewDisplacePlace" method="execute">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

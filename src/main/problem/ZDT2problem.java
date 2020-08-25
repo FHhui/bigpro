@@ -10,9 +10,7 @@ public class ZDT2problem extends Multiproblem{
         this.numberOfObjectives=2;
         this.numberOfVariables=30;
         this.lowerlimit=new ArrayList<>();
-
         this.upperlimit=new ArrayList<>();
-
         for (int i=0;i<this.numberOfVariables;i++){
             lowerlimit.add(0.0);
             upperlimit.add(1.0);

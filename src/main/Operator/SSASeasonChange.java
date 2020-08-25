@@ -3,10 +3,7 @@ package main.Operator;
 import main.Algorithm.MaShOA;
 import main.Algorithm.MoSSA;
 import main.Algorithm.SSA;
-import main.Solution.MaShOADoubleSolutionSet;
-import main.Solution.NSSSADoubleSolutionSet;
-import main.Solution.SSADoubleSolutionSet;
-import main.Solution.solutionSet;
+import main.Solution.*;
 import main.problem.*;
 
 import java.io.BufferedReader;
@@ -14,6 +11,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class SSASeasonChange extends operator{
     //季节变化算子
@@ -131,6 +129,31 @@ public class SSASeasonChange extends operator{
                     }
                 } else
                     continue;
+            }
+        }
+        return s;
+    }
+    public SSATspSolutionSet execute(SSATspSolutionSet s, Singleproblem p , int t, int generation,double best,int cityNum){
+        //具体操作,s是解集，t是当前迭代次数,generation是迭代次数,问题p
+        double Sct = s.array.get(0).fitness-best;
+        if (Sct<0){
+            Sct=0-Sct;
+        }
+        double Smin = 1 / Math.pow(365, 2.5 * t / generation);
+        if (Sct <= Smin) {
+            //变异操作\
+            System.out.println("bianyi");
+            for (int i=2;i<s.array.size();i++){
+            int ran1, ran2, temp,count;
+            Random random=new Random();
+            ran1 = random.nextInt(65535) % cityNum;
+            ran2 = random.nextInt(65535) % cityNum;
+            while (ran1 == ran2) {
+                    ran2 = random.nextInt(65535) % cityNum;
+                }
+            temp = s.array.get(i).city_cycle.get(ran1);
+            s.array.get(i).city_cycle.set(ran1,s.array.get(i).city_cycle.get(ran2));
+            s.array.get(i).city_cycle.set(ran2,temp);
             }
         }
         return s;
