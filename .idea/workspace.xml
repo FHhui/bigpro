@@ -41,7 +41,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.SSA_TSP">
+  <component name="RunManager" selected="Application.Multi_SSA_Tsp">
     <configuration name="MaShOA" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.Algorithm.MaShOA" />
       <module name="bigpro" />
@@ -70,6 +70,19 @@
     </configuration>
     <configuration name="MoSSA" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.Algorithm.MoSSA" />
+      <module name="bigpro" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.Algorithm.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Multi_SSA_Tsp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="main.Algorithm.Multi_SSA_Tsp" />
       <module name="bigpro" />
       <extension name="coverage">
         <pattern>
