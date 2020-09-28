@@ -68,7 +68,7 @@ public class SSA_TSP {
         return child;
     }
     public static void main (String args[]){
-        SSA_TSP t=new SSA_TSP(1000,50,48);
+        SSA_TSP t=new SSA_TSP(100000,50,48);
         t.getResult(new TSP(48,"D://data.txt"));
     }
 }

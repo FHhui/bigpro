@@ -112,6 +112,7 @@ public class SSANewDisplacePlace extends operator {
         }
         return s;
     }
+
     public MaShOADoubleSolutionSet execute(MaShOADoubleSolutionSet s, Hyperproblem p){
         //具体的操作方法
         for (int i = MaShOA.is_best; i<s.array.size(); i++){
@@ -151,4 +152,5 @@ public class SSANewDisplacePlace extends operator {
         }
         return s;
     }
+
 }
