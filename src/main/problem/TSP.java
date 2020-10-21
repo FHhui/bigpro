@@ -23,6 +23,7 @@ public class TSP extends Singleproblem{
     }
 
     public double[][] distance;//距离矩阵
+
     public void init(String filename) throws IOException {
         //从文件中读取tsp路径问题
         double[] x;
@@ -42,6 +43,7 @@ public class TSP extends Singleproblem{
         }
         // 计算距离矩阵
         // ，针对具体问题，距离计算方法也不一样，此处用的是att48作为案例，它有48个城市，距离计算方法为伪欧氏距离，最优值为10628
+
         for (int i = 0; i < cityNum - 1; i++) {
             distance[i][i] = 0; // 对角线为0
             for (int j = i + 1; j < cityNum; j++) {
@@ -54,6 +56,7 @@ public class TSP extends Singleproblem{
         }
         distance[cityNum - 1][cityNum - 1] = 0;//最后一个元素
     }
+
     public SSATspSolution evalute(SSATspSolution s){
         double len=0;
         for (int i=1;i<cityNum;i++){

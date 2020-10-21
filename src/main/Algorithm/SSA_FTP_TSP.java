@@ -1,23 +1,19 @@
 package main.Algorithm;
 
 import main.Operator.*;
-import main.Solution.SSADoubleSolutionSet;
-import main.Solution.SSATspSolution;
 import main.Solution.SSATspSolutionSet;
-import main.Solution.solutionSet;
-import main.problem.RGAproblem;
 import main.problem.Singleproblem;
 import main.problem.TSP;
 
-public class SSA_TSP {
-    //单目标松鼠算法
+public class SSA_FTP_TSP {
+    //单目标松鼠算法，使用了邻域搜索初始化的松鼠算法用于解决单目标Tsp问题
     int generation;//迭代次数
     int humans;//种群个体数
     int citynum;
     public static final int is_best=1;
     public static final int is_sec_best=3;
 
-    public SSA_TSP(int generation,int humans,int citynum){
+    public SSA_FTP_TSP(int generation,int humans,int citynum){
         this.generation=generation;
         this.humans=humans;
         this.citynum=citynum;
@@ -29,7 +25,7 @@ public class SSA_TSP {
     public SSATspSolutionSet getResult(Singleproblem p ){
         double best=0;
         SSATspSolutionSet child=new SSATspSolutionSet();
-        SSATspRandominit SDR=new SSATspRandominit();//初始化操作
+        SSATspFtpRandominit SDR=new SSATspFtpRandominit();//初始化操作
         child=SDR.execute(child,p,humans,citynum);
         SSASort SS=new SSASort();
 
@@ -37,6 +33,7 @@ public class SSA_TSP {
         best=child.array.get(0).fitness;
         for (int i=0;i<generation;i++){
             //随机选择，生成新位置算子·
+
             SSA_Tsp_NewDisplace SND=new SSA_Tsp_NewDisplace();
 
             child=SND.execute(child,p,citynum);
@@ -58,18 +55,11 @@ public class SSA_TSP {
             child=SS.execute(child);
             best=child.array.get(0).fitness;
             System.out.println(child.array.get(0).fitness);
-            //System.out.println(child.array.get(0).city_cycle.size());
-//            for (int m=0;m<humans;m++){
-//                for (int k=0;k<citynum;k++){
-//                    System.out.print(child.array.get(m).city_cycle.get(k)+"-");
-//                }
-//            }
-//        }
         }
         return child;
     }
     public static void main (String args[]){
-        SSA_TSP t=new SSA_TSP(10000,50,48);
+        SSA_FTP_TSP t=new SSA_FTP_TSP(10000,50,48);
         t.getResult(new TSP(48,"D://data.txt"));
     }
 }

@@ -30,6 +30,7 @@ public class SSA_Tsp_NewDisplace {
                         int a, b, c, flag;
                         int ran1, ran2, temp;
                         int[] Gh1 = new int[cityNum];
+
                         ran1 = random.nextInt(65535) % cityNum;
                         ran2 = random.nextInt(65535) % cityNum;
 
@@ -51,7 +52,10 @@ public class SSA_Tsp_NewDisplace {
                         // 已近赋值i=ran2-ran1个基因
                         for (c = 0, b = flag; b < cityNum;)// 染色体长度
                         {
-                            Gh1[b] = s.array.get(i).city_cycle.get(c++);//对个体1的基因组进行读取
+                            Gh1[b] = s.
+                                    array.get(i).
+                                    city_cycle.get(c++);//对个体1的基因组进行读取
+
                             for (a = 0; a < flag; a++) {
                                 if (Gh1[a] == Gh1[b]) {
                                     break;

@@ -50,12 +50,6 @@ public class SSASort extends Sort{
         for (int i=is_best;i<is_best+is_sec_best;i++)
             s.array.get(i).is_sec_best=true;
         //标记到达过次优解的松鼠
-//        for (int m=0;m<50;m++){
-//            for (int k=0;k<48;k++){
-//                System.out.print(s.array.get(m).city_cycle.get(k)+"-");
-//                }
-//            }
-//        System.out.println("00000000000000000 ");
         return s;
     }
 }

@@ -5,7 +5,7 @@ import main.problem.*;
 
 import java.util.Random;
 
-public class SSATspRandominit {
+public class SSATspRandominit extends Randominit{
     //tsp的随机初始化
     public SSATspSolutionSet execute(SSATspSolutionSet solutionS, Singleproblem p,int population,int cityNum) {
         Random random=new Random();
@@ -19,6 +19,7 @@ public class SSATspRandominit {
                     int j=0;
                     for (j = 0; j < i; j++) {
                         if (SDS.city_cycle.get(i) == SDS.city_cycle.get(j)) {//如果相同,那就得重新来,路径不能重复
+                            SDS.city_cycle.remove(i);
                             break;
                         }
                     }
@@ -26,15 +27,12 @@ public class SSATspRandominit {
                         i++;
                     }
                 }
-//                for (int k=0;k<cityNum;k++){
-//                    System.out.print(SDS.city_cycle.get(k)+"-");
-//                }
-//                System.out.println("00000000000000000 ");
-
-
             TSP p1=(TSP) p;
             SDS=p1.evalute(SDS);
+            //System.out.println(SDS.city_cycle.size());
+            //System.out.println(SDS.city_cycle.size());
             solutionS.array.add(SDS);
+
         }
 
         return solutionS;

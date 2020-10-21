@@ -3,29 +3,30 @@ package main.Algorithm;
 import main.Operator.*;
 import main.Solution.SSAMultiTspSolution;
 import main.Solution.SSAMultiTspSolutionSet;
-import main.Solution.SSATspSolutionSet;
-import main.problem.*;
+import main.problem.Multi_Tsp;
+import main.problem.Multiproblem;
 
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class Multi_SSA_Tsp {
+public class SSA_Charge_Tsp extends MultiAlgorithm{
+    //松鼠算法用于解决充电站tsp部署问题
     //会很慢
     //多目标松鼠算法用于解决tsp问题
     int generation;//迭代次数
     int humans;//种群个体数
-    int citynum;
+    int citynum;//城市数目
     int k=4;//将网格分为几份
     public HashMap<int[],Integer> map;
     public static final int is_best=3;
     public static final int is_sec_best=9;
 
-    public Multi_SSA_Tsp(int generation,int humans,int citynum){
+    public SSA_Charge_Tsp(int generation,int humans,int citynum){
         this.generation=generation;
         this.humans=humans;
         this.citynum=citynum;
     }
-    
+
     public SSAMultiTspSolutionSet calLocation(SSAMultiTspSolutionSet s){
         map=new HashMap<>();//初始化参数
         //冒泡排序.
@@ -125,7 +126,7 @@ public class Multi_SSA_Tsp {
                 if (child.array.get(m).rank == 1){
                     System.out.println(child.array.get(m).fitness1+","+child.array.get(m).fitness2);
                 }
-        }
+            }
             //输出第几代
             System.out.println(i);
             //在季节条件变化完成之后，这里应该还有一个精英选择算法
