@@ -59,7 +59,7 @@ public class SSA_FTP_TSP {
         return child;
     }
     public static void main (String args[]){
-        SSA_FTP_TSP t=new SSA_FTP_TSP(10000,50,48);
-        t.getResult(new TSP(48,"D://data.txt"));
+        SSA_FTP_TSP t=new SSA_FTP_TSP(10000,50,52);
+        t.getResult(new TSP(52,"D://berlin52.txt"));
     }
 }

@@ -95,12 +95,15 @@ public class SSA_Tsp_NewDisplace {
                             }
                             flag = ran2 - ran1 + 1;// 删除重复基因前染色体长度
                             for (a = 0, b = ran1; a < flag; a++, b++) {
-                                Gh1[a] = s.array.get(i).city_cycle.get(b);//交叉基因组1
+                                Gh1[a] = s.array.get(which_second_best).city_cycle.get(b);//交叉基因组1
                             }
                             // 已近赋值i=ran2-ran1个基因
                             for (c = 0, b = flag; b < cityNum;)// 染色体长度
                             {
-                                Gh1[b] = s.array.get(which_second_best).city_cycle.get(c++);//对个体1的基因组进行读取
+                                Gh1[b] = s.array.
+                                        get(i).
+                                        city_cycle.
+                                        get(c++);//对个体1的基因组进行读取
                                 for (a = 0; a < flag; a++) {
                                     if (Gh1[a] == Gh1[b]) {
                                         break;

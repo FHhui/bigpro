@@ -49,6 +49,7 @@ public class SSATspRandominit extends Randominit{
                 int j=0;
                 for (j = 0; j < i; j++) {
                     if (SDS.city_cycle.get(i) == SDS.city_cycle.get(j)) {//如果相同,那就得重新来,路径不能重复
+                        SDS.city_cycle.remove(i);
                         break;
                     }
                 }
