@@ -11,8 +11,6 @@ import java.util.Iterator;
 
 public class SSA_Charge_Tsp extends MultiAlgorithm{
     //松鼠算法用于解决充电站tsp部署问题
-    //会很慢
-    //多目标松鼠算法用于解决tsp问题
     int generation;//迭代次数
     int humans;//种群个体数
     int citynum;//城市数目
@@ -99,7 +97,6 @@ public class SSA_Charge_Tsp extends MultiAlgorithm{
             child=NSFS.execute(child);
             System.out.println("快速非支配排序完毕");
             child=this.calLocation(child);
-
             NSSSASort nss=new NSSSASort();
             child=nss.execute(child,map);
             System.out.println("冒泡排序操作完成");

@@ -6,6 +6,7 @@ import main.Solution.NSSSADoubleSolutionSet;
 import main.Solution.solution;
 import main.problem.Multiproblem;
 import main.problem.ZDT1problem;
+import main.problem.ZDT2problem;
 import main.problem.ZDT6problem;
 
 import java.util.HashMap;
@@ -19,7 +20,7 @@ public class NSGADoubleGeneration extends Selection {
         NSSSADoubleSolutionSet news=new NSSSADoubleSolutionSet(s.size());
         NSSSADoubleSolutionSet totalS=new NSSSADoubleSolutionSet(2*s.size());
 
-        ZDT6problem p=new ZDT6problem();
+        ZDT2problem p=new ZDT2problem();
 
         for (int i=0;i<2*s.size();i++){
                 if (i<s.size()){

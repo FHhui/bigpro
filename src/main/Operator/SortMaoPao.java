@@ -16,7 +16,7 @@ public class SortMaoPao extends Sort{
                 //冒泡排序
                 if (s.array.get(j).evafitness>s.array.get(j+1).evafitness){
                     NSSSADoubleSolution a= s.array.get(j).copy(s.array.get(j),p);
-                    NSSSADoubleSolution b= s.array.get(j).copy(s.array.get(j),p);
+                    NSSSADoubleSolution b= s.array.get(j+1).copy(s.array.get(j),p);
                     s.array.set(j,b);
                     s.array.set(j+1,a);
                 }

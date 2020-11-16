@@ -11,7 +11,7 @@ public class NSSSADoubleRandominit extends Randominit{
             for (int i=0;i<NDS.variables.length;i++){
                 NDS.variables[i].setDoubleVariable(p.lowerlimit.get(i)+Math.random()*(p.upperlimit.get(i)-p.lowerlimit.get(i)));
             }
-            ZDT6problem z1=(ZDT6problem) p;
+            ZDT2problem z1=(ZDT2problem) p;
             NDS=z1.evalute(NDS);
             solutionS.add(NDS);
         }

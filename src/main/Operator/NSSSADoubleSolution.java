@@ -38,6 +38,7 @@ public class NSSSADoubleSolution extends solution {
         NSSSADoubleSolution newS = new NSSSADoubleSolution(p);
         newS.location=s.location;
         newS.fitness=s.fitness;
+        newS.evafitness=s.evafitness;
         newS.nq=s.nq;
         newS.distance=s.distance;
         newS.rank=s.rank;
@@ -57,6 +58,7 @@ public class NSSSADoubleSolution extends solution {
             variables[i]=new DoubleVariable();//初始化解
         }
         location=new int[p.getNumberOfObjectives()];
+        this.evafitness=0;
         this.sp=new ArrayList<>();
         this.nq=0;
         this.distance=0.0;

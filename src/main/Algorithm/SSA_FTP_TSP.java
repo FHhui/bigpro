@@ -35,7 +35,6 @@ public class SSA_FTP_TSP {
             //随机选择，生成新位置算子·
 
             SSA_Tsp_NewDisplace SND=new SSA_Tsp_NewDisplace();
-
             child=SND.execute(child,p,citynum);
 
             for (int m=0;m<child.array.size();m++){
@@ -47,6 +46,7 @@ public class SSA_FTP_TSP {
             //季节变化条件算子
             SSASeasonChange SSC=new SSASeasonChange();
             child=SSC.execute(child,p,i,generation,best,citynum);
+
             //重新排列并计算
             for (int m=0;m<child.array.size();m++){
                 TSP p1=(TSP) p;
@@ -59,7 +59,7 @@ public class SSA_FTP_TSP {
         return child;
     }
     public static void main (String args[]){
-        SSA_FTP_TSP t=new SSA_FTP_TSP(10000,50,52);
-        t.getResult(new TSP(52,"D://berlin52.txt"));
+        SSA_FTP_TSP t=new SSA_FTP_TSP(10000,50,48);
+        t.getResult(new TSP(48,"D://data.txt"));
     }
 }

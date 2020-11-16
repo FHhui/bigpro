@@ -58,13 +58,7 @@ public class SSA_TSP {
             child=SS.execute(child);
             best=child.array.get(0).fitness;
             System.out.println(child.array.get(0).fitness);
-            //System.out.println(child.array.get(0).city_cycle.size());
-//            for (int m=0;m<humans;m++){
-//                for (int k=0;k<citynum;k++){
-//                    System.out.print(child.array.get(m).city_cycle.get(k)+"-");
-//                }
-//            }
-//        }
+
         }
         return child;
     }

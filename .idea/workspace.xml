@@ -41,9 +41,22 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.MoSSA">
+  <component name="RunManager" selected="Application.MoSSA (1)">
     <configuration name="MaShOA2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.Algorithm.SSA_FTP_TSP" />
+      <module name="bigpro" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.Algorithm.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MoSSA (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="main.Algorithm.MoSSA" />
       <module name="bigpro" />
       <extension name="coverage">
         <pattern>
@@ -64,28 +77,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Multi_SSA_Tsp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="main.Algorithm.Multi_SSA_Tsp" />
-      <module name="bigpro" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="main.Algorithm.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="NSGAIII" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="1.8.0_231" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="NSGAIII" />
-      <module name="bigpro" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -137,21 +128,20 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.SSA_FTP_TSP" />
       <item itemvalue="Application.SSA" />
-      <item itemvalue="Application.NSGAIII" />
       <item itemvalue="Application.MaShOA2" />
+      <item itemvalue="Application.MoSSA (1)" />
       <item itemvalue="Application.MoSSA" />
-      <item itemvalue="Application.Multi_SSA_Tsp" />
       <item itemvalue="Application.SSA_FTP_TSP1" />
+      <item itemvalue="Application.SSA_FTP_TSP" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.MoSSA (1)" />
+        <item itemvalue="Application.SSA_FTP_TSP" />
         <item itemvalue="Application.MoSSA" />
         <item itemvalue="Application.SSA_FTP_TSP1" />
         <item itemvalue="Application.MaShOA2" />
-        <item itemvalue="Application.Multi_SSA_Tsp" />
-        <item itemvalue="Application.SSA_FTP_TSP" />
       </list>
     </recent_temporary>
   </component>
@@ -197,26 +187,26 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="498" y="195" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1536.824@0.0.1536.824" timestamp="1603700060121" />
-    <state width="1493" height="666" key="GridCell.Tab.0.bottom" timestamp="1603706277668">
+    <state width="1493" height="2" key="GridCell.Tab.0.bottom" timestamp="1605433870594">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="666" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603706277668" />
-    <state width="1493" height="666" key="GridCell.Tab.0.center" timestamp="1603706277667">
+    <state width="1493" height="2" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1605433870594" />
+    <state width="1493" height="2" key="GridCell.Tab.0.center" timestamp="1605433870594">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="666" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1603706277667" />
-    <state width="1493" height="666" key="GridCell.Tab.0.left" timestamp="1603706277667">
+    <state width="1493" height="2" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1605433870594" />
+    <state width="1493" height="2" key="GridCell.Tab.0.left" timestamp="1605433870594">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="666" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1603706277667" />
-    <state width="1493" height="666" key="GridCell.Tab.0.right" timestamp="1603706277667">
+    <state width="1493" height="2" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1605433870594" />
+    <state width="1493" height="2" key="GridCell.Tab.0.right" timestamp="1605433870594">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="666" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1603706277667" />
-    <state x="833" y="237" key="com.intellij.ide.util.TipDialog" timestamp="1603267472456">
+    <state width="1493" height="2" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1605433870594" />
+    <state x="833" y="237" key="com.intellij.ide.util.TipDialog" timestamp="1605424486480">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="833" y="237" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1603267472456" />
+    <state x="833" y="237" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1605424486480" />
     <state x="93" y="93" width="1350" height="638" key="dock-window-1" timestamp="1599529041174">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

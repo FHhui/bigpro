@@ -83,12 +83,9 @@ public class Multi_SSA_Tsp {
         double best=0;
         SSAMultiTspSolutionSet child=new SSAMultiTspSolutionSet();
         SSATspRandominit SDR=new SSATspRandominit();//初始化操作
-        //所以这里应该有一个父代来为接下来的精英选择做准备。
         child=SDR.execute(child,p,humans,citynum);
-
         for (int i=0;i<generation;i++){
             //快速非支配排序
-
             for (int m=0;m<child.array.size();m++){
                 Multi_Tsp p1=(Multi_Tsp) p;
                 child.array.set(m,p1.evalute(child.array.get(m)));

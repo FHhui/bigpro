@@ -6,6 +6,7 @@ import main.problem.*;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.function.DoubleToIntFunction;
 
 public class MoSSA extends MultiAlgorithm {
     //多目标松鼠算法，
@@ -15,6 +16,7 @@ public class MoSSA extends MultiAlgorithm {
     int human=50;//种群大小
     public static int is_best=3;//最优个数
     public static int is_sec_best=9;//次优个数
+    //最优个数与次优个数导致了种群全部成为了最优的现象。
     public HashMap<int[],Integer> map;
 
     public NSSSADoubleSolutionSet run(Multiproblem p) {
@@ -32,7 +34,7 @@ public class MoSSA extends MultiAlgorithm {
         for (int i=0;i<s.array.size();i++){
             for (int j=0;j<s.array.size()-i-1;i++){
                 if (s.array.get(j).fitness[m]>s.array.get(j+1).fitness[m]){
-                    NSSSADoubleSolution temp=s.array.get(j).copy(s.array.get(j),new ZDT6problem());
+                    NSSSADoubleSolution temp=s.array.get(j).copy(s.array.get(j),new ZDT2problem());
                     s.array.set(j,s.array.get(j+1));
                     s.array.set(j+1,temp);
                 }
@@ -80,26 +82,34 @@ public class MoSSA extends MultiAlgorithm {
             NSSSADoubleSolutionSet f= s.copy(p);
             NSGAFastNonSort NSFN=new NSGAFastNonSort();//快速非支配排序算子
             NSFN.execute(s);
-
+            //System.out.println("快速非支配排序结束");
             s=calLocation(s);
+            //System.out.println("位置计算结束");
             //利用网格法来计算距离，在排序方法中
             //map=calLocation(map,s);
             //根据帕累托等级与距离值进行排序，因为采用网格法修改了部分排列设定
-            NSSSASort nss=new NSSSASort();
-            s=nss.execute(s,map);
 
+           // System.out.println("排序结束");
             //根据密度和适应值计算映射函数
             s=calfitness(s,map);
             //种群迁移
+            NSSSASort nss=new NSSSASort();
+            s=nss.execute(s);
+
             SSANewDisplacePlace sndp=new SSANewDisplacePlace();
-            sndp.execute(s);
+            sndp.execute(s,p);
+          //  System.out.println("种群迁移结束");
             //季节条件
             SSASeasonChange ssc=new SSASeasonChange();
             s=ssc.execute(s,p,i,generation);
+       //     System.out.println("季节改变结束");
             //根据季节等条件更新位置
             //子父代精英选择
-            NSGADoubleGeneration NSDG=new NSGADoubleGeneration();
-            s=NSDG.execute(s,f,map);
+            for (int a=0;a<human;a++){
+                s.array.set(a,(new ZDT2problem()).evalute(s.array.get(a)));
+            }
+//
+
             for (int j=0;j<s.size();j++){
                 if (s.array.get(j).rank==1){
                     System.out.println("{"+s.array.get(j).fitness[0]+","+s.array.get(j).fitness[1]+"},");
@@ -111,19 +121,18 @@ public class MoSSA extends MultiAlgorithm {
     public NSSSADoubleSolutionSet calfitness(NSSSADoubleSolutionSet s,HashMap<int[],Integer> map){
         //计算映射函数
         for (int i=0;i<s.size();i++){
-            //System.out.println(map);
             for (int[] key:map.keySet()){
                 if (key[0]==s.array.get(i).location[0]&&key[1]==s.array.get(i).location[1]){
                     s.array.get(i).evafitness=
-                            ((double)map.get(key) /s.array.get(i).sp.size());
+                            ((double)map.get(key) /(s.array.get(i).sp.size()+1));
                 }
             }
         }
         return s;
     }
     public static void main(String args[]){
-        MoSSA test=new MoSSA(100,50);
-        ZDT6problem z=new ZDT6problem();
+        MoSSA test=new MoSSA(10000,50);
+        ZDT2problem z=new ZDT2problem();
         test.getResult(z);
 }
 }

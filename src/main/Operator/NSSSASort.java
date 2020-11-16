@@ -1,13 +1,14 @@
 package main.Operator;
 
 import main.Solution.*;
+import main.problem.ZDT2problem;
 
 import java.util.HashMap;
 import java.util.Iterator;
 
 public class NSSSASort extends Sort{
     //多目标松鼠算子使用拥挤度的排序操作
-    public NSSSADoubleSolutionSet execute(NSSSADoubleSolutionSet s){
+    public NSSSADoubleSolutionSet execute1(NSSSADoubleSolutionSet s){
         for(int i=0;i<s.array.size();i++){
             for (int j=0;j<s.array.size()-i-1;j++){
                 //System.out.println(j);
@@ -47,7 +48,7 @@ public class NSSSASort extends Sort{
                 //System.out.println(j);
                 if (s.array.get(j).rank>s.array.get(j+1).rank){
                     //帕累托等级大往后排
-                    NSSSADoubleSolution ss=solution.clone(s.array.get(j));
+                    NSSSADoubleSolution ss=s.array.get(j).copy(s.array.get(j),new ZDT2problem());
                     s.array.set(j,s.array.get(j+1));
                     s.array.set((j+1),ss);
                 }else if (s.array.get(j).rank==s.array.get(j+1).rank){
@@ -119,5 +120,20 @@ public class NSSSASort extends Sort{
             }
         }
         return Integer.MAX_VALUE;
+    }
+    public NSSSADoubleSolutionSet execute(NSSSADoubleSolutionSet s)
+    {
+        for(int i=0;i<s.array.size();i++){
+            for (int j=0;j<s.array.size()-i-1;j++){
+                //System.out.println(j);
+                if (s.array.get(j).evafitness>s.array.get(j+1).evafitness){
+                    //evafitness大往后排
+                    NSSSADoubleSolution ss=s.array.get(j).copy(s.array.get(j),new ZDT2problem());
+                    s.array.set(j,s.array.get(j+1));
+                    s.array.set((j+1),ss);
+                }
+            }
+        }
+        return s;
     }
 }

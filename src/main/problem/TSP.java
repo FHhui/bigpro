@@ -53,7 +53,7 @@ public class TSP extends Singleproblem{
             distance[i][i] = 0; // 对角线为0
             for (int j = i + 1; j < cityNum; j++) {
                 double rij = Math.sqrt(((x[i] - x[j]) * (x[i] - x[j]) +
-                        (y[i] - y[j]) * (y[i] - y[j])));
+                        (y[i] - y[j]) * (y[i] - y[j]))/10);
                 // 四舍五入，取整
                 distance[i][j]=rij;
                 distance[j][i]=rij;
