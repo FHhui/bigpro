@@ -1,11 +1,9 @@
 package main.problem;
 
-import main.Algorithm.MaShOA;
-import main.Operator.NSSSADoubleSolution;
+import main.Solution.NSSSADoubleSolution;
 import main.Solution.DoubleVariable;
 import main.Solution.MaShOADoubleSolution;
 import main.Solution.NSGAIIIDoubleSolution;
-import main.Solution.solution;
 
 import java.util.ArrayList;
 

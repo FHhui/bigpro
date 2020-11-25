@@ -218,7 +218,7 @@ public class SSASeasonChange extends operator{
             sc.add(n);
         }
         double[] dis=new double[s.size()];
-        for (int i=0;i<s.size;i++){
+        for (int i=0;i<s.array.size();i++){
             dis[i]=Double.MAX_VALUE;
             for (int j=0;j<sc.size();j++){
                 double pdis=0;
@@ -250,5 +250,43 @@ public class SSASeasonChange extends operator{
                 / (Factorial((beta - 1) / 2) * beta * Math.pow(2, ((beta - 1) / 2)))), 1 / beta);
         double levy = 1 * ra * sigma / (Math.pow((Math.abs(rb)), 1 / beta));
         return levy;
+    }
+    public double GD(NSGADoubleSolutionSet s) throws IOException {
+        double gd=0;
+        File file = new File("D:\\ZDT3.txt");//定义一个file对象，用来初始化FileReader
+        FileReader reader = new FileReader(file);//定义一个fileReader对象，用来初始化BufferedReader
+        BufferedReader bReader = new BufferedReader(reader);//new一个BufferedReader对象，将文件内容读取到缓存
+        ArrayList<double[]> sc=new ArrayList<>();
+        String h = "";
+
+        while ((h =bReader.readLine()) != null) {//逐行读取文件内容，不读取换行符和末尾的空格
+            String[] ss=h.split(" ");
+            double[] n=new double[ss.length];
+            for (int m=0;m<ss.length;m++){
+                n[m]=Double.parseDouble(ss[m]);
+            }
+            sc.add(n);
+        }
+        double[] dis=new double[s.size()];
+        for (int i=0;i<s.array.size();i++){
+            dis[i]=Double.MAX_VALUE;
+            for (int j=0;j<sc.size();j++){
+                double pdis=0;
+                for (int m=0;m<sc.get(j).length;m++){
+                    pdis+=((s.array.get(i).fitness[m]-sc.get(j)[m])*(s.array.get(i).fitness[m]-sc.get(j)[m]));//距离之和
+                }
+                pdis=Math.sqrt(pdis);
+                if (dis[i]>pdis){
+                    dis[i]=pdis;
+                }
+            }
+        }
+        //double gd=0;
+        for (int i=0;i<s.size();i++){
+            gd+=dis[i];
+        }
+        gd=gd/s.size();
+        System.out.println("这个算法的GD指标为"+gd);
+        return gd;
     }
 }

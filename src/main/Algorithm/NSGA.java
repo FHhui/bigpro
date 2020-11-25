@@ -5,12 +5,15 @@ import main.Solution.NSGADoubleSolutionSet;
 import main.Solution.solutionSet;
 import main.problem.Multiproblem;
 import main.problem.ZDT1problem;
+import main.problem.ZDT2problem;
+
+import java.io.IOException;
 
 public class NSGA extends MultiAlgorithm{
 //多目标遗传算法，NSGA2算法类实现 2020.1.30
     int humans;//种群个数
     int generation;//迭代次数
-    public solutionSet run(Multiproblem p) {
+    public solutionSet run(Multiproblem p) throws IOException {
         return getResult(p);
     }
 
@@ -19,13 +22,13 @@ public class NSGA extends MultiAlgorithm{
         this.generation=generation;
     }
 
-    public solutionSet getResult(Multiproblem p) {
+    public solutionSet getResult(Multiproblem p) throws IOException {
         ZDT1problem p1=(ZDT1problem) p ;
         NSGADoubleSolutionSet s=new NSGADoubleSolutionSet(humans);
         NSGADoubleRandominit NDR=new NSGADoubleRandominit();
         s=NDR.execute(s,p);
         for (int i=0;i<generation;i++){
-            NSGADoubleSolutionSet child=solutionSet.clone(s);//child是子类，通过序列化深度克隆父类得到。
+            NSGADoubleSolutionSet child=s.copy(p);//child是子类，通过序列化深度克隆父类得到。
             //快速非支配排序
             NSGAFastNonSort NFNS=new NSGAFastNonSort();
             NFNS.execute(child);
@@ -54,12 +57,13 @@ public class NSGA extends MultiAlgorithm{
                     System.out.println("["+s.array.get(m).fitness[0]+","+s.array.get(m).fitness[1]+"],");
                 }
             }
-
+            SSASeasonChange ssa=new SSASeasonChange();
+            ssa.GD(s);
         }
         return s;
     }
-    public static void main(String args[]){
-        NSGA test=new NSGA(50,100);
+    public static void main(String args[]) throws IOException {
+        NSGA test=new NSGA(100,10000);
         ZDT1problem p=new ZDT1problem();
         test.run(p);
     }

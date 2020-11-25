@@ -1,6 +1,5 @@
 package main.Solution;
 
-import main.Operator.NSSSADoubleSolution;
 import main.problem.Multiproblem;
 
 import java.util.ArrayList;
@@ -13,8 +12,9 @@ public class NSSSADoubleSolutionSet extends solutionSet {
     int whichbest;
     public NSSSADoubleSolutionSet copy(Multiproblem p){
         NSSSADoubleSolutionSet ans=new NSSSADoubleSolutionSet(array.size());
-        for (NSSSADoubleSolution s:array){
-            ans.add(s.copy(s,p));
+
+        for (int i=0;i< this.array.size();i++){
+            ans.add(this.array.get(i).copy(this.array.get(i),p));
         }
         return ans;
     }

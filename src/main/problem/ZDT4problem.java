@@ -1,6 +1,6 @@
 package main.problem;
 
-import main.Operator.NSSSADoubleSolution;
+import main.Solution.NSSSADoubleSolution;
 
 import java.util.ArrayList;
 
@@ -49,6 +49,7 @@ public class ZDT4problem extends Multiproblem{
      * @param g Second argument of the function H.
      */
     public double evalH(double f, double g) {
+
         return 1.0 - Math.sqrt(f / g);
     }
 

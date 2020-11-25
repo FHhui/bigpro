@@ -1,12 +1,20 @@
 package main.Solution;
 
+import main.problem.Multiproblem;
+
 import java.util.ArrayList;
 
 public class NSGADoubleSolutionSet extends solutionSet{
     public ArrayList<NSGADoubleSolution> array;
     public int realsize;
     public int size;
-
+    public NSGADoubleSolutionSet copy(Multiproblem p){
+        NSGADoubleSolutionSet ans=new NSGADoubleSolutionSet(array.size());
+        for (NSGADoubleSolution s:array){
+            ans.add(s.copy(s,p));
+        }
+        return ans;
+    }
     public void add(NSGADoubleSolution s){
         if (realsize<size){
             array.add(s);

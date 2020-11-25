@@ -1,6 +1,6 @@
 package main.problem;
 
-import main.Operator.NSSSADoubleSolution;
+import main.Solution.NSSSADoubleSolution;
 
 import java.util.ArrayList;
 

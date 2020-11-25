@@ -1,6 +1,7 @@
 package main.problem;
 
-import main.Operator.NSSSADoubleSolution;
+import main.Solution.NSGADoubleSolution;
+import main.Solution.NSSSADoubleSolution;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,20 @@ public class ZDT2problem extends Multiproblem{
         }
     }
     public NSSSADoubleSolution evalute(NSSSADoubleSolution s){
+        double dou =s.variables[0].getDoubleVariable();
+        s.fitness[0]=dou;
+        double g=1,sum=0;
+        for (int i=1;i<s.variables.length;i++){
+            g+=s.variables[i].getDoubleVariable();
+        }
+        sum=9/ (s.variables.length-1);
+        g=sum*g;
+        g=1.0+g;
+        double h=1.0-Math.pow(dou/g,2.0);
+        s.fitness[1]=h*g;
+        return s;
+    }
+    public NSGADoubleSolution evalute(NSGADoubleSolution s){
         double[] f = new double[this.numberOfObjectives];
         //System.out.println(s.variables[0].doubleVariable);
         f[0] = s.variables[0].getDoubleVariable();
@@ -33,5 +48,9 @@ public class ZDT2problem extends Multiproblem{
         s.fitness[0] = f[0];
         s.fitness[1] = f[1];
         return s;
+    }
+
+    public double evalH(double f, double g) {
+        return 1.0 - Math.pow(f / g, 2.0);
     }
 }

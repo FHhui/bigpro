@@ -130,9 +130,9 @@ public class NSGAFastNonSort extends Sort{
         ArrayList<NSSSADoubleSolutionSet> F=new ArrayList<NSSSADoubleSolutionSet>();
         NSSSADoubleSolutionSet fx=new NSSSADoubleSolutionSet(s.size);
 
-        for (int i=0;i<s.size;i++){
+        for (int i=0;i<s.array.size();i++){
             s.array.get(i).nq=0;
-            for (int j=0;j<s.size;j++){
+            for (int j=0;j<s.array.size();j++){
                 if (j!=i){
                     if (s.array.get(i).fitness[0]<=s.array.get(j).fitness[0] && s.array.get(i).fitness[1]<=s.array.get(j).fitness[1]){//两个函数均小于
                         //支配关系 i支配j
@@ -173,7 +173,10 @@ public class NSGAFastNonSort extends Sort{
             F.add(fx);
             i++;
         }
-        System.out.println("快排结束");
+       NSSSADoubleSolutionSet f=new NSSSADoubleSolutionSet(s.array.size());
+        for (int j=0;j<s.array.size();j++){
+            f.array.add(s.array.get(j));
+        }
         return s;
     }
     public NSGADoubleSolutionSet execute(NSGADoubleSolutionSet s){

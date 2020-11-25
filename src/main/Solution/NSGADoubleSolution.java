@@ -21,4 +21,19 @@ public class NSGADoubleSolution extends solution {
         this.nq=0;
         this.distance=0.0;
     }
+    public NSGADoubleSolution copy(NSGADoubleSolution s, Multiproblem p){
+        NSGADoubleSolution newS = new NSGADoubleSolution(p);
+
+        newS.fitness=s.fitness;
+
+        newS.nq=s.nq;
+        newS.distance=s.distance;
+        newS.rank=s.rank;
+        newS.sp=s.sp;
+        for (int i=0;i<variables.length;i++){
+            newS.variables[i].doubleVariable=s.variables[i].doubleVariable;
+        }
+        return  newS;
+    }
+
 }

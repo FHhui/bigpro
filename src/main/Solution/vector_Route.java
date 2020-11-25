@@ -1,7 +1,5 @@
 package main.Solution;
 
-import main.Operator.NSSSADoubleSolution;
-
 import java.io.*;
 import java.util.ArrayList;
 

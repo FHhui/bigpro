@@ -1,9 +1,7 @@
 package main.Operator;
 
-import main.Solution.NSGADoubleSolution;
-import main.Solution.NSGADoubleSolutionSet;
-import main.Solution.NSSSADoubleSolutionSet;
-import main.Solution.solutionSet;
+import main.Solution.*;
+import main.problem.*;
 
 public class CalDistance extends operator{
     //nsga算法的拥挤度计算算法类
@@ -69,34 +67,38 @@ public class CalDistance extends operator{
     public NSSSADoubleSolutionSet execute(NSSSADoubleSolutionSet s){
         //多目标松鼠距离值计算方法
         for (int i=0;i<s.array.size();i++){
-            for (int j=0;j<s.array.size()-i-1;i++){
+            for (int j=0;j<s.array.size()-i-1;j++){
                 if (s.array.get(j).fitness[0]>s.array.get(j+1).fitness[0]){
-                    NSSSADoubleSolution temp=s.array.get(j);
+                    NSSSADoubleSolution temp=s.array.get(j).copy(s.array.get(j),new ZDT2problem());
                     s.array.set(j,s.array.get(j+1));
                     s.array.set(j+1,temp);
                 }
             }
         }
-        s.array.get(s.array.size()-1).distance=s.array.get(0).distance=Integer.MAX_VALUE;
+        s.array.get(s.array.size()-1).distance=s.array.get(0).distance=Double.MAX_VALUE;
         for(int i=1;i<s.array.size()-1;i++){
             s.array.get(i).distance=0;
             //计算函数1拥挤度的部分
+
             s.array.get(i).distance=(s.array.get(i+1).fitness[0]-s.array.get(i-1).fitness[0])/(s.array.get(s.size()-1).fitness[0]-s.array.get(0).fitness[0]);//函数1的拥挤度计算
         }
+//        for (int i=0;i<s.array.size();i++){
+//            System.out.println(s.array.get(i).distance);
+//        }
         for (int i=0;i<s.array.size();i++){
-            for (int j=0;j<s.array.size()-i-1;i++){
+            for (int j=0;j<s.array.size()-i-1;j++){
                 if (s.array.get(j).fitness[1]>s.array.get(j+1).fitness[1]){
-                    NSSSADoubleSolution temp=s.array.get(j);
+                    NSSSADoubleSolution temp=s.array.get(j).copy(s.array.get(j),new ZDT2problem());
                     s.array.set(j,s.array.get(j+1));
                     s.array.set(j+1,temp);
                 }
             }
         }
-        s.array.get(s.array.size()-1).distance=s.array.get(0).distance=Integer.MAX_VALUE;
+        s.array.get(s.array.size()-1).distance=s.array.get(0).distance=Double.MAX_VALUE;
         for(int i=1;i<s.array.size()-1;i++){
             s.array.get(i).distance=0;
             //计算函数1拥挤度的部分
-            s.array.get(i).distance=(s.array.get(i+1).fitness[1]-s.array.get(i-1).fitness[1])/(s.array.get(s.size()-1).fitness[1]-s.array.get(0).fitness[1]);//函数1的拥挤度计算
+            s.array.get(i).distance+=(s.array.get(i+1).fitness[1]-s.array.get(i-1).fitness[1])/(s.array.get(s.size()-1).fitness[1]-s.array.get(0).fitness[1]);//函数1的拥挤度计算
         }
         return s;
     }

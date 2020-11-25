@@ -1,11 +1,7 @@
 package main.Operator;
 
-import main.Algorithm.MaShOA;
 import main.Algorithm.MoSSA;
-import main.Solution.MaShOADoubleSolution;
-import main.Solution.MaShOADoubleSolutionSet;
-import main.Solution.NSSSADoubleSolutionSet;
-import main.Solution.solution;
+import main.Solution.*;
 import main.problem.Hyperproblem;
 import main.problem.Multiproblem;
 

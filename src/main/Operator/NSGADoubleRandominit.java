@@ -4,6 +4,7 @@ import main.Solution.NSGADoubleSolution;
 import main.Solution.NSGADoubleSolutionSet;
 import main.problem.Multiproblem;
 import main.problem.ZDT1problem;
+import main.problem.ZDT2problem;
 
 public class NSGADoubleRandominit extends Randominit{
     //继承了随机初始化的NSGA算法的随机初始化类

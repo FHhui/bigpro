@@ -1,6 +1,7 @@
 package main.Algorithm;
 
 import main.Operator.*;
+import main.Solution.NSSSADoubleSolution;
 import main.Solution.NSSSADoubleSolutionSet;
 import main.problem.Multiproblem;
 import main.problem.ZDT6problem;
@@ -95,8 +96,8 @@ public class MOSSA_Tsp {
             s=ssc.execute(s,p,i,generation);
             //根据季节等条件更新位置
             //子父代精英选择
-            NSGADoubleGeneration NSDG=new NSGADoubleGeneration();
-            s=NSDG.execute(s,f,map);
+//            NSGADoubleGeneration NSDG=new NSGADoubleGeneration();
+//            s=NSDG.execute(s,f,map);
             for (int j=0;j<s.size();j++){
                 if (s.array.get(j).rank==1){
                     System.out.println("{"+s.array.get(j).fitness[0]+","+s.array.get(j).fitness[1]+"},");

@@ -1,5 +1,6 @@
 package main.Operator;
 
+import main.Solution.NSSSADoubleSolution;
 import main.Solution.NSSSADoubleSolutionSet;
 import main.problem.*;
 
