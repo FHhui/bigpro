@@ -187,7 +187,7 @@ public class SSA_Tsp_NewDisplace {
         for (int i = Multi_SSA_Tsp.is_best; i<s.array.size(); i++){
             double dg=0.5+Math.random()*0.61;
             double r=Math.random();//是否遇到捕食者的标尺
-            double pdp=0.05;//不遇到捕食者的最低限度
+            double pdp=0.1;//不遇到捕食者的最低限度
             if (r>=pdp)//产生新位置，没有遇到捕食者,如果存在捕食者就原地不动
             {
                 if (i >= Multi_SSA_Tsp.is_best && i < (Multi_SSA_Tsp.is_best + Multi_SSA_Tsp.is_sec_best)) {
@@ -237,7 +237,8 @@ public class SSA_Tsp_NewDisplace {
                     }
 
 
-                } else if (i >= SSA.is_best + SSA.is_sec_best && s.array.get(i).is_sec_best == false) {
+                }
+                else if (i >= SSA.is_best + SSA.is_sec_best && s.array.get(i).is_sec_best == false) {
                     //对于普通解但是没有去过次优解的来说
                     int which_second_best = (int) (Multi_SSA_Tsp.is_best + Math.random() * (Multi_SSA_Tsp.is_sec_best));
                     for (int j = 0; j < s.array.get(0).city_cycle.size(); j++) {
@@ -280,7 +281,8 @@ public class SSA_Tsp_NewDisplace {
                             s.array.get(i).city_cycle.set(a, Gh1[a]);// 交叉完毕放回种群
                         }
                     }
-                } else if (i >= SSA.is_best + SSA.is_sec_best && s.array.get(i).is_sec_best == true) {
+                }
+                else{
                     //对于普通解但是去过次优解的解来说
                     //======>>对于次优解来说。<<========
                     //采用原来的交叉算子的应用
@@ -328,23 +330,6 @@ public class SSA_Tsp_NewDisplace {
                     }
 
                     //松鼠跳跃操作已经完成
-                } else {
-                    //存在捕食者就xjb飞
-                    s.array.get(i).city_cycle.set(0,random.nextInt(65535) % cityNum);//这里就是想初始化一条路径而已，
-                    // 我也不知道那个看起来很玄学的65535是干嘛的
-                    for (int m = 1; m < cityNum;)// 染色体长度
-                    {
-                        s.array.get(i).city_cycle.set(m,random.nextInt(65535) % cityNum);
-                        int j;
-                        for (j = 0; j < m; j++) {
-                            if (s.array.get(i).city_cycle.get(m) == s.array.get(i).city_cycle.get(j)) {//如果相同,那就得重新来,路径不能重复
-                                break;
-                            }
-                        }
-                        if (j == m) {
-                            m++;
-                        }
-                    }
                 }
             }
         }

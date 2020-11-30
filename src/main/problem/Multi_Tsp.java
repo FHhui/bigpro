@@ -82,6 +82,7 @@ public class Multi_Tsp extends Multiproblem{
                     dist = (int)(dist + .5);
                     matrix[k][j] = dist;
                     matrix[j][k] = dist;
+                    //System.out.println(dist);
                 }
             }
         } catch (Exception e) {
@@ -95,14 +96,14 @@ public class Multi_Tsp extends Multiproblem{
             len+=distance[s.city_cycle.get(i-1)][s.city_cycle.get(i)];
         }
         len+=distance[s.city_cycle.get(cityNum-1)][s.city_cycle.get(0)];
-        s.fitness1=len;
+        s.fitness[0]=len;
 
         double len2=0;
         for (int i=1;i<cityNum;i++){
             len2+=costMatrix[s.city_cycle.get(i-1)][s.city_cycle.get(i)];
         }
         len2+=costMatrix[s.city_cycle.get(cityNum-1)][s.city_cycle.get(0)];
-        s.fitness2=len2;
+        s.fitness[1]=len2;
         return s;
     }
 

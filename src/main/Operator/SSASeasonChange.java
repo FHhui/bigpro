@@ -165,19 +165,29 @@ public class SSASeasonChange extends operator{
     public SSAMultiTspSolutionSet execute(SSAMultiTspSolutionSet s,Multiproblem p,int t ,int generation,double best,int cityNum){
         //具体操作,s是解集，t是当前迭代次数,generation是迭代次数,问题p
         //暂时使用单目标的来做季节条件变化
-        double Sct = s.array.get(0).fitness1-best;
+        double Sct = s.array.get(0).fitness[0]-best;
         if (Sct<0){
             Sct=0-Sct;
         }
         double Smin = 1 / Math.pow(365, 2.5 * t / generation);
         double mc=Math.random();
-
+        //System.out.println(best);
         if (Sct <= Smin) {
             //变异操作\
             System.out.println("bianyi");
             for (int i = Multi_SSA_Tsp.is_best+Multi_SSA_Tsp.is_sec_best; i<s.array.size(); i++){
                 int ran1, ran2, temp,count;
                 Random random=new Random();
+                ran1 = random.nextInt(65535) % cityNum;
+                ran2 = random.nextInt(65535) % cityNum;
+                while (ran1 == ran2) {
+                    ran2 = random.nextInt(65535) % cityNum;
+                }
+                //这要有一个城市链发生了变化就会导致2个适应值都发生变化/
+                temp = s.array.get(i).city_cycle.get(ran1);
+                s.array.get(i).city_cycle.set(ran1,s.array.get(i).city_cycle.get(ran2));
+                s.array.get(i).city_cycle.set(ran2,temp);
+
                 ran1 = random.nextInt(65535) % cityNum;
                 ran2 = random.nextInt(65535) % cityNum;
                 while (ran1 == ran2) {

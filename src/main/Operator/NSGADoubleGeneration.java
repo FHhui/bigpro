@@ -1,11 +1,10 @@
 package main.Operator;
 
 import main.Algorithm.MoSSA;
+import main.Algorithm.Multi_SSA_Tsp;
+import main.Algorithm.SSA;
 import main.Solution.*;
-import main.problem.Multiproblem;
-import main.problem.ZDT1problem;
-import main.problem.ZDT2problem;
-import main.problem.ZDT6problem;
+import main.problem.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -165,21 +164,23 @@ public class NSGADoubleGeneration extends Selection {
 //                }
 //            }
 //        }
-        NSGAFastNonSort NSFN=new NSGAFastNonSort();
-        totalS=NSFN.execute(totalS);
 
-        CalDistance cd=new CalDistance();
-        totalS=cd.execute(totalS);
+        NSGAFastNonSort NSFN = new NSGAFastNonSort();
+        totalS = NSFN.execute(totalS);
+
+        CalDistance cd = new CalDistance();
+        totalS = cd.execute(totalS);
 
         NSSSASort nss = new NSSSASort();
         totalS = nss.execute_gird(totalS);
 
-        for (int i=0;i<s.array.size();i++){
+        for (int i = 0; i < s.array.size(); i++) {
             //System.out.println(totalS.array.get(i).distance);
             news.add(totalS.array.get(i));
         }
         return news;
     }
+
     public NSSSADoubleSolutionSet execute(NSSSADoubleSolutionSet s, NSSSADoubleSolutionSet s1) {
         NSSSADoubleSolutionSet news = new NSSSADoubleSolutionSet(s.size());
         NSSSADoubleSolutionSet totalS = new NSSSADoubleSolutionSet(2 * s.size());
@@ -238,7 +239,7 @@ public class NSGADoubleGeneration extends Selection {
     }
 
     public NSSSADoubleSolutionSet lunpan(NSSSADoubleSolutionSet s) {
-        int h=s.array.size()/2;
+        int h = s.array.size() / 2;
         while (true) {
             double sum = 0;
 
@@ -255,12 +256,50 @@ public class NSGADoubleGeneration extends Selection {
                     break;
                 }
             }
-            if (s.array.size()==h){
+            if (s.array.size() == h) {
                 //System.out.println(s.array.size());
                 break;
             }
         }
         return s;
 
+    }
+
+    public SSAMultiTspSolutionSet execute(SSAMultiTspSolutionSet s, SSAMultiTspSolutionSet s1, Multi_Tsp p) {
+        SSAMultiTspSolutionSet news = new SSAMultiTspSolutionSet(s.array.size());
+        SSAMultiTspSolutionSet totalS = new SSAMultiTspSolutionSet(2 * s.array.size());
+
+        for (int i = 0; i < 2 * s.array.size(); i++) {
+            if (i < s.array.size()) {
+                s.array.set(i, p.evalute(s.array.get(i)));
+                totalS.array.add(s.array.get(i));
+            } else {
+                int n = i - s.array.size();
+                s1.array.set(n, p.evalute(s1.array.get(n)));
+                totalS.array.add(s1.array.get(n));
+            }
+        }
+
+        //System.out.println(totalS.array.size()+"kkkkkkk");
+        for (int m = 0; m < totalS.array.size(); m++) {
+            totalS.array.set(m, p.evalute(totalS.array.get(m)));
+        }
+
+        //计算rank值
+        NSGAFastNonSort NSFN = new NSGAFastNonSort();
+        totalS = NSFN.execute(totalS);
+
+        //计算距离值
+        CalDistance cd = new CalDistance();
+        totalS = cd.execute(totalS);
+
+        //根据rank值和距离值进行排序
+        NSSSASort nss = new NSSSASort();
+        totalS = nss.execute_gird(totalS);
+
+        for (int i = 0; i < s.array.size(); i++) {
+            news.array.add(totalS.array.get(i));
+        }
+        return news;
     }
 }

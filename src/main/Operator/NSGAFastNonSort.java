@@ -335,22 +335,23 @@ public class NSGAFastNonSort extends Sort{
     public SSAMultiTspSolutionSet execute(SSAMultiTspSolutionSet s){
 
         ArrayList<SSAMultiTspSolutionSet> F=new ArrayList<>();
-        SSAMultiTspSolutionSet fx=new SSAMultiTspSolutionSet();
+        SSAMultiTspSolutionSet fx=new SSAMultiTspSolutionSet(s.array.size());
 
         for (int i=0;i<s.array.size();i++){
             s.array.get(i).nq=0;
+            s.array.get(i).sp=new ArrayList<>();
             for (int j=0;j<s.array.size();j++){
                 if (j!=i){
-                    if (s.array.get(i).fitness1<=s.array.get(j).fitness1 && s.array.get(i).fitness1<=s.array.get(j).fitness2){//两个函数均小于
+                    if (s.array.get(i).fitness[0]<=s.array.get(j).fitness[0] && s.array.get(i).fitness[1]<=s.array.get(j).fitness[1]){//两个函数均小于
                         //支配关系 i支配j
-                        if (s.array.get(i).fitness1==s.array.get(j).fitness1 && s.array.get(i).fitness2==s.array.get(j).fitness2){
+                        if (s.array.get(i).fitness[0]==s.array.get(j).fitness[0] && s.array.get(i).fitness[1]==s.array.get(j).fitness[1]){
                             //对于相等的来说，没有任何操作才是对的
                         }else{
                             s.array.get(i).sp.add(s.array.get(j));
                         }
-                    }else if(s.array.get(i).fitness1>=s.array.get(j).fitness1 && s.array.get(i).fitness2>=s.array.get(j).fitness2){//两个函数均大于
+                    }else if(s.array.get(i).fitness[0]>=s.array.get(j).fitness[0] && s.array.get(i).fitness[1]>=s.array.get(j).fitness[1]){//两个函数均大于
                         //被支配关系 i被j支配
-                        if (s.array.get(i).fitness1==s.array.get(j).fitness1 && s.array.get(i).fitness2==s.array.get(j).fitness2){
+                        if (s.array.get(i).fitness[0]==s.array.get(j).fitness[0] && s.array.get(i).fitness[1]==s.array.get(j).fitness[1]){
                             //对于相等的来说，没有任何操作才是对的
                         }else{
                             s.array.get(i).nq++;
@@ -366,7 +367,7 @@ public class NSGAFastNonSort extends Sort{
         F.add(fx);
         int i=0;
         while (F.get(i).array.size()!=0){
-            fx=new SSAMultiTspSolutionSet();
+            fx=new SSAMultiTspSolutionSet(s.array.size());
             for (int j=0;j<F.get(i).array.size();j++){//对F进行迭代
                 for (int m=0;m<F.get(i).array.get(j).sp.size();m++){
                     //对F中的个体支配个体集进行迭代

@@ -12,6 +12,8 @@ public  class solution implements Serializable {
     public solution(problem p){
         fitness=new double[p.getNumberOfObjectives()];
     }
+    public solution(){
+    }
     public static <T> T clone(T sourceObj) {
         ByteArrayOutputStream byteArrayOutputStream = null;
         ObjectOutputStream objectOutputStream = null;

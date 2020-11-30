@@ -41,7 +41,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.MoSSA (1)">
+  <component name="RunManager" selected="Application.Multi_SSA_Tsp">
     <configuration name="MoSSA (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.Algorithm.MoSSA" />
       <module name="bigpro" />
@@ -57,6 +57,19 @@
     </configuration>
     <configuration name="MoSSA" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.Algorithm.SSA_FTP_TSP" />
+      <module name="bigpro" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.Algorithm.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Multi_SSA_Tsp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="main.Algorithm.Multi_SSA_Tsp" />
       <module name="bigpro" />
       <extension name="coverage">
         <pattern>
@@ -101,19 +114,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SSA_FTP_TSP1" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="main.Algorithm.SSA_FTP_TSP" />
-      <module name="bigpro" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="main.Algorithm.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="SSA_FTP_TSP" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.Algorithm.SSA_FTP_TSP" />
       <module name="bigpro" />
@@ -132,16 +132,16 @@
       <item itemvalue="Application.MoSSA (1)" />
       <item itemvalue="Application.MoSSA" />
       <item itemvalue="Application.NSGA" />
-      <item itemvalue="Application.SSA_FTP_TSP1" />
       <item itemvalue="Application.SSA_FTP_TSP" />
+      <item itemvalue="Application.Multi_SSA_Tsp" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Multi_SSA_Tsp" />
         <item itemvalue="Application.MoSSA (1)" />
         <item itemvalue="Application.NSGA" />
         <item itemvalue="Application.SSA_FTP_TSP" />
         <item itemvalue="Application.MoSSA" />
-        <item itemvalue="Application.SSA_FTP_TSP1" />
       </list>
     </recent_temporary>
   </component>
@@ -191,22 +191,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="168" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1606268109586" />
-    <state width="1493" height="2" key="GridCell.Tab.0.bottom" timestamp="1606310393426">
+    <state width="1493" height="393" key="GridCell.Tab.0.bottom" timestamp="1606724182423">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="2" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1606310393426" />
-    <state width="1493" height="2" key="GridCell.Tab.0.center" timestamp="1606310393426">
+    <state width="1493" height="393" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1606724182423" />
+    <state width="1493" height="393" key="GridCell.Tab.0.center" timestamp="1606724182423">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="2" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1606310393426" />
-    <state width="1493" height="2" key="GridCell.Tab.0.left" timestamp="1606310393426">
+    <state width="1493" height="393" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1606724182423" />
+    <state width="1493" height="393" key="GridCell.Tab.0.left" timestamp="1606724182423">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="2" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1606310393426" />
-    <state width="1493" height="2" key="GridCell.Tab.0.right" timestamp="1606310393426">
+    <state width="1493" height="393" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1606724182423" />
+    <state width="1493" height="393" key="GridCell.Tab.0.right" timestamp="1606724182423">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="2" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1606310393426" />
+    <state width="1493" height="393" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1606724182423" />
     <state x="408" y="110" key="NewModule_or_Project.wizard" timestamp="1606268131222">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -215,10 +215,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="270" y="55" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1605705135447" />
-    <state x="833" y="237" key="com.intellij.ide.util.TipDialog" timestamp="1606267836470">
+    <state x="833" y="237" key="com.intellij.ide.util.TipDialog" timestamp="1606699629099">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="833" y="237" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1606267836470" />
+    <state x="833" y="237" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1606699629099" />
     <state x="93" y="93" width="1350" height="638" key="dock-window-1" timestamp="1599529041174">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -227,6 +227,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="447" y="145" width="642" height="534" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1605771594656" />
+    <state x="178" y="22" key="new project wizard" timestamp="1606397302738">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="178" y="22" key="new project wizard/0.0.1536.824@0.0.1536.824" timestamp="1606397302738" />
     <state x="425" y="187" key="run.anything.popup" timestamp="1606302636375">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

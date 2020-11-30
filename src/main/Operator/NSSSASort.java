@@ -106,7 +106,7 @@ public class NSSSASort extends Sort{
         return s;
     }
     //使用多目标tsp松鼠的排序算子
-    public SSAMultiTspSolutionSet execute(SSAMultiTspSolutionSet s, HashMap<int[],Integer> map){
+    public SSAMultiTspSolutionSet execute(SSAMultiTspSolutionSet s){
         //利用序列化与反序列化的操作非常容易导致运行时间变长，超级无敌长
         //可以手动实现copy方法来弥补这一不足
         //那么问题来了序列化与反序列化的操作为什么会那么的慢呢？
@@ -114,19 +114,10 @@ public class NSSSASort extends Sort{
         for(int i=0;i<s.array.size();i++){
             for (int j=0;j<s.array.size()-i-1;j++){
                 //System.out.println(j);
-                if (s.array.get(j).rank>s.array.get(j+1).rank){
-                    //帕累托等级大往后排
+                if (s.array.get(j).evafitness>s.array.get(j+1).evafitness){
                     SSAMultiTspSolution ss=SSAMultiTspSolution.copy(s.array.get(j));
                     s.array.set(j,s.array.get(j+1));
                     s.array.set((j+1),ss);
-                }else if (s.array.get(j).rank==s.array.get(j+1).rank){
-                    //帕累托等级相等的情况
-                    if(getlevel((s.array.get(j)),map)>getlevel((s.array.get(j+1)),map)){
-                        //网格内粒子数目多的往后排，这里因为网格法的应用所以这里有部分改变
-                        SSAMultiTspSolution ss=SSAMultiTspSolution.copy(s.array.get(j));
-                        s.array.set(j,s.array.get(j+1));
-                        s.array.set((j+1),ss);
-                    }
                 }
             }
         }
@@ -153,6 +144,27 @@ public class NSSSASort extends Sort{
                     NSSSADoubleSolution ss=solution.clone(s.array.get(j));
                     s.array.set(j,s.array.get(j+1));
                     s.array.set((j+1),ss);
+                }
+            }
+        }
+        return s;
+    }
+    public SSAMultiTspSolutionSet execute_gird(SSAMultiTspSolutionSet s){
+        for(int i=0;i<s.array.size();i++){
+            for (int j=0;j<s.array.size()-1-i;j++){
+                if (s.array.get(j).rank>s.array.get(j+1).rank){
+                    //帕累托等级大往后排
+                    SSAMultiTspSolution ss=s.array.get(j).copy(s.array.get(j));
+                    s.array.set(j,s.array.get(j+1));
+                    s.array.set((j+1),ss);
+                }else if (s.array.get(j).rank==s.array.get(j+1).rank){
+                    //帕累托等级相等的情况
+                    if(s.array.get(j).distance<(s.array.get(j+1).distance)){
+                        //distance小的往后排
+                        SSAMultiTspSolution ss=s.array.get(j).copy(s.array.get(j));
+                        s.array.set(j,s.array.get(j+1));
+                        s.array.set((j+1),ss);
+                    }
                 }
             }
         }

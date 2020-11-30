@@ -37,7 +37,7 @@ public class SSATspRandominit extends Randominit{
 
         return solutionS;
     }
-    public SSAMultiTspSolutionSet execute(SSAMultiTspSolutionSet solutionS, Multiproblem p, int population, int cityNum) {
+    public SSAMultiTspSolutionSet execute(SSAMultiTspSolutionSet solutionS, Multi_Tsp p, int population, int cityNum) {
         Random random=new Random();
         while (!(solutionS.array.size()==population)) {
             SSAMultiTspSolution SDS = new SSAMultiTspSolution();
@@ -57,8 +57,8 @@ public class SSATspRandominit extends Randominit{
                     i++;
                 }
             }
-            Multi_Tsp p1=(Multi_Tsp) p;
-            SDS=p1.evalute(SDS);
+
+            SDS=p.evalute(SDS);
             solutionS.array.add(SDS);
         }
 

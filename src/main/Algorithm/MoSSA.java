@@ -20,7 +20,7 @@ public class MoSSA extends MultiAlgorithm {
     public static int is_best = 4;//最优个数
     public static int is_sec_best = 10;//次优个数
     //最优个数与次优个数导致了种群全部成为了最优的现象。
-    public HashMap<int[], ArrayList<NSSSADoubleSolution>> map;
+    public HashMap<int[], ArrayList> map;
 
     public NSSSADoubleSolutionSet run(Multiproblem p) {
         return getResult(p);
@@ -30,59 +30,6 @@ public class MoSSA extends MultiAlgorithm {
         this.generation = generation;
         this.human = humans;
     }
-
-    public NSSSADoubleSolutionSet calLocation(NSSSADoubleSolutionSet s) {
-        //位置划分函数
-        map = new HashMap<>();//初始化参数
-        //冒泡排序.
-        for (int m = 0; m < s.array.get(0).fitness.length; m++) {
-            for (int i = 0; i < s.array.size(); i++) {
-                for (int j = 0; j < s.array.size() - i - 1; j++) {
-                    if (s.array.get(j).fitness[m] > s.array.get(j + 1).fitness[m]) {
-                        NSSSADoubleSolution temp = s.array.get(j).copy(s.array.get(j), new ZDT2problem());
-                        s.array.set(j, s.array.get(j + 1));
-                        s.array.set(j + 1, temp);
-                    }
-                }
-            }
-            //单函数冒泡排序结束
-            delta = (s.array.get(s.array.size() - 1).fitness[m]
-                    - s.array.get(0).fitness[m]) / k;//k表示需要划分多少个表格在一个纬度上
-            for (int i = 0; i < s.size(); i++) {
-                s.array.get(i).location[m] = (int) Math.floor((s.array.get(i).fitness[m] - s.array.get(0).fitness[m]) / delta);
-                if (s.array.get(i).location[m] == k)
-                    s.array.get(i).location[m] = k - 1;
-                //向下取整
-            }
-        }
-        //到这一步每一个个体的location都已经更新完毕，然后统计每一个位置和
-        map = new HashMap<>();
-        for (int i = 0; i < k; i++) {
-            for (int j = 0; j < k; j++) {
-                int[] a = {i, j};
-                map.put(a, new ArrayList<NSSSADoubleSolution>());
-            }
-        }//初始化map
-
-        //向map里放入数
-        for (int i = 0; i < s.array.size(); i++) {
-            int[] h = s.array.get(i).location;
-            Iterator it = map.keySet().iterator();
-            if (it.hasNext()) {
-                int[] temp = (int[]) it.next();
-                if (temp.equals(h)) {
-
-                    map.get(temp).add(s.array.get(i));
-                    //map.replace(temp,map.get(temp).add(s.array.get(i)));
-                }
-            }
-        }
-        this.map = map;
-        this.delta = delta;
-
-        return s;
-    }
-
     public NSSSADoubleSolutionSet getResult(Multiproblem p) {
         NSSSADoubleSolutionSet s = new NSSSADoubleSolutionSet(human);
         NSSSADoubleRandominit NSDR = new NSSSADoubleRandominit();//**更改问题
@@ -91,16 +38,7 @@ public class MoSSA extends MultiAlgorithm {
             //迭代操作
             //快速非支配排序
             NSSSADoubleSolutionSet f = solutionSet.clone(s);
-            //            for (int a = 0; a < human; a++) {
-//                System.out.println("["+s.array.get(a).fitness[0]+","+s.array.get(a).fitness[1]+"],");
-//
-//            }
-//            System.out.println("adjkajdkajdkajdkajdkajdkajdkjakdjakdjkajdka");
-//            for (int a = 0; a < human; a++) {
-//                System.out.println("["+f.array.get(a).fitness[0]+","+f.array.get(a).fitness[1]+"],");
-//
-//            }
-            //System.out.println(s.array.size());
+
             NSGAFastNonSort NSFN = new NSGAFastNonSort();//快速非支配排序算子
             NSFN.execute(s);
             //System.out.println("快速非支配排序结束");
@@ -195,7 +133,7 @@ public class MoSSA extends MultiAlgorithm {
         return null;
     }
 
-    public NSSSADoubleSolutionSet calfitness(NSSSADoubleSolutionSet s, HashMap<int[], ArrayList<NSSSADoubleSolution>> map) {
+    public NSSSADoubleSolutionSet calfitness(NSSSADoubleSolutionSet s, HashMap<int[], ArrayList> map) {
         //计算映射函数
         for (int i = 0; i < s.size(); i++) {
             for (int[] key : map.keySet()) {
@@ -209,7 +147,7 @@ public class MoSSA extends MultiAlgorithm {
     }
 
     public static void main(String args[]) {
-        MoSSA test = new MoSSA(10, 50);
+        MoSSA test = new MoSSA(10000, 50);
         ZDT2problem z = new ZDT2problem();
         test.getResult(z);
     }
