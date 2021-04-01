@@ -213,7 +213,7 @@ public class SSASeasonChange extends operator{
     }
     public double GD(NSSSADoubleSolutionSet s) throws IOException {
         double gd=0;
-        File file = new File("D:\\ZDT2.txt");//定义一个file对象，用来初始化FileReader
+        File file = new File("D:\\ZDT1.txt");//定义一个file对象，用来初始化FileReader
         FileReader reader = new FileReader(file);//定义一个fileReader对象，用来初始化BufferedReader
         BufferedReader bReader = new BufferedReader(reader);//new一个BufferedReader对象，将文件内容读取到缓存
         ArrayList<double[]> sc=new ArrayList<>();

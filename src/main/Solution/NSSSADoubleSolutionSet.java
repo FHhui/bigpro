@@ -4,7 +4,7 @@ import main.problem.Multiproblem;
 
 import java.util.ArrayList;
 //多目标松鼠的解集类
-public class NSSSADoubleSolutionSet extends solutionSet {
+public class NSSSADoubleSolutionSet extends solutionSet implements Cloneable{
     public ArrayList<NSSSADoubleSolution> array;
     public int realsize;
     public int size;
@@ -59,4 +59,17 @@ public class NSSSADoubleSolutionSet extends solutionSet {
         realsize=0;
     }
     //松鼠算法浮点数解集。
+
+    public Object clone() throws CloneNotSupportedException
+    {
+        //这一步返回的这个student2还只是一个浅克隆，
+        NSSSADoubleSolutionSet student2 = new NSSSADoubleSolutionSet(this.array.size());
+        //然后克隆的过程中获得这个克隆的student2，然后调用这个getTeacher这个方方法得到这个Teacher对象。然后实现克隆。在设置到这个student2中的Teacher。
+        //这样实现了双层克隆使得那个teacher对象也得到了复制。
+        for (int i=0;i<this.array.size();i++){
+            student2.array.add((NSSSADoubleSolution) this.array.get(i).clone());
+        }
+        //双层克隆使得那个teacher对象也得到了复制
+        return student2;
+    }
 }

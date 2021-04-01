@@ -69,7 +69,7 @@ public class CalDistance extends operator{
         for (int i=0;i<s.array.size();i++){
             for (int j=0;j<s.array.size()-i-1;j++){
                 if (s.array.get(j).fitness[0]>s.array.get(j+1).fitness[0]){
-                    NSSSADoubleSolution temp=s.array.get(j).copy(s.array.get(j),new ZDT2problem());
+                    NSSSADoubleSolution temp=s.array.get(j).copy(s.array.get(j),new ZDT1problem());
                     s.array.set(j,s.array.get(j+1));
                     s.array.set(j+1,temp);
                 }
@@ -88,7 +88,7 @@ public class CalDistance extends operator{
         for (int i=0;i<s.array.size();i++){
             for (int j=0;j<s.array.size()-i-1;j++){
                 if (s.array.get(j).fitness[1]>s.array.get(j+1).fitness[1]){
-                    NSSSADoubleSolution temp=s.array.get(j).copy(s.array.get(j),new ZDT2problem());
+                    NSSSADoubleSolution temp=s.array.get(j).copy(s.array.get(j),new ZDT1problem());
                     s.array.set(j,s.array.get(j+1));
                     s.array.set(j+1,temp);
                 }

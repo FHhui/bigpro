@@ -15,14 +15,14 @@ public class NSSSASort extends Sort{
                 //System.out.println(j);
                 if (s.array.get(j).rank>s.array.get(j+1).rank){
                     //帕累托等级大往后排
-                    NSSSADoubleSolution ss= s.array.get(j).copy(s.array.get(j),new ZDT2problem());
+                    NSSSADoubleSolution ss= s.array.get(j).copy(s.array.get(j),new ZDT1problem());
                     s.array.set(j,s.array.get(j+1));
                     s.array.set((j+1),ss);
                 }else if (s.array.get(j).rank==s.array.get(j+1).rank){
                     //帕累托等级相等的情况
                     if(s.array.get(j).distance<s.array.get(j+1).distance){
                         //拥挤值距离小的往后排
-                        NSSSADoubleSolution ss=s.array.get(j).copy(s.array.get(j),new ZDT2problem());
+                        NSSSADoubleSolution ss=s.array.get(j).copy(s.array.get(j),new ZDT1problem());
                         s.array.set(j,s.array.get(j+1));
                         s.array.set((j+1),ss);
                     }
@@ -49,7 +49,7 @@ public class NSSSASort extends Sort{
                 //System.out.println(j);
                 if (s.array.get(j).rank>s.array.get(j+1).rank){
                     //帕累托等级大往后排
-                    NSSSADoubleSolution ss=s.array.get(j).copy(s.array.get(j),new ZDT2problem());
+                    NSSSADoubleSolution ss=s.array.get(j).copy(s.array.get(j),new ZDT1problem());
                     s.array.set(j,s.array.get(j+1));
                     s.array.set((j+1),ss);
                 }else if (s.array.get(j).rank==s.array.get(j+1).rank){
@@ -71,12 +71,12 @@ public class NSSSASort extends Sort{
             for (int j=0;j<s.array.size()-1-i;j++){
                 if (s.array.get(j).rank>s.array.get(j+1).rank){
                     //帕累托等级大往后排
-                    NSGADoubleSolution ss=s.array.get(j).copy(s.array.get(j),new ZDT4problem());
+                    NSGADoubleSolution ss=s.array.get(j).copy(s.array.get(j),new ZDT1problem());
                     s.array.set(j,s.array.get(j+1));
                     s.array.set((j+1),ss);
                 }else if (s.array.get(j).rank==s.array.get(j+1).rank){
                     //帕累托等级相等的情况
-                    NSGADoubleSolution ss=s.array.get(j).copy(s.array.get(j),new ZDT4problem());
+                    NSGADoubleSolution ss=s.array.get(j).copy(s.array.get(j),new ZDT1problem());
                     s.array.set(j,s.array.get(j+1));
                     s.array.set((j+1),ss);
                 }
@@ -89,14 +89,14 @@ public class NSSSASort extends Sort{
             for (int j=0;j<s.array.size()-1-i;j++){
                 if (s.array.get(j).rank>s.array.get(j+1).rank){
                     //帕累托等级大往后排
-                    NSSSADoubleSolution ss=s.array.get(j).copy(s.array.get(j),new ZDT2problem());
+                    NSSSADoubleSolution ss=s.array.get(j).copy(s.array.get(j),new ZDT1problem());
                     s.array.set(j,s.array.get(j+1));
                     s.array.set((j+1),ss);
                 }else if (s.array.get(j).rank==s.array.get(j+1).rank){
                     //帕累托等级相等的情况
                     if(s.array.get(j).distance<(s.array.get(j+1).distance)){
                         //网格内粒子数目多的往后排，这里因为网格法的应用所以这里有部分改变
-                        NSSSADoubleSolution ss=s.array.get(j).copy(s.array.get(j),new ZDT2problem());
+                        NSSSADoubleSolution ss=s.array.get(j).copy(s.array.get(j),new ZDT1problem());
                         s.array.set(j,s.array.get(j+1));
                         s.array.set((j+1),ss);
                     }
@@ -141,7 +141,12 @@ public class NSSSASort extends Sort{
                 //System.out.println(j);
                 if (s.array.get(j).evafitness>s.array.get(j+1).evafitness){
                     //evafitness大往后排
-                    NSSSADoubleSolution ss=solution.clone(s.array.get(j));
+                    NSSSADoubleSolution ss= null;
+                    try {
+                        ss = (NSSSADoubleSolution) s.array.get(j).clone();
+                    } catch (CloneNotSupportedException e) {
+                        e.printStackTrace();
+                    }
                     s.array.set(j,s.array.get(j+1));
                     s.array.set((j+1),ss);
                 }

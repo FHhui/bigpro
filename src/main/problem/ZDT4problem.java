@@ -23,12 +23,28 @@ public class ZDT4problem extends Multiproblem{
         double[] f = new double[getNumberOfObjectives()];
 
         f[0] = solution.variables[0].getDoubleVariable();
-        double g = this.evalG(solution);
-        double h = this.evalH(f[0], g);
+        //double g = this.evalG(solution);
+
+        double g = 0.0;
+
+        for (int var = 1; var < 10; var++) {
+            System.out.println(solution.variables[var].getDoubleVariable());
+            g += Math.pow(solution.variables[var].getDoubleVariable(), 2.0) +
+                    -10.0 * Math.cos(4.0 * Math.PI * solution.variables[var].getDoubleVariable());
+        }
+
+        double constant = 1.0 + 10.0 * (10 - 1);
+        g=g + constant;
+
+        double h = 1.0 - Math.sqrt(f[0] / g);
+
         f[1] = h * g;
+        //System.out.println("h:"+h+"g:"+g);
 
         solution.fitness[0]= f[0];
+        //System.out.println(f[0]+"===="+solution.fitness[0]);
         solution.fitness[1]= f[1];
+        //System.out.println(f[1]+"===="+solution.fitness[1]);
         return solution;
     }
     public double evalG(NSSSADoubleSolution solution) {

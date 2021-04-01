@@ -1,6 +1,7 @@
 package main.Solution;
 
 import main.Algorithm.MaShOA;
+import main.problem.DTLZ1;
 import main.problem.Hyperproblem;
 import main.problem.problem;
 
@@ -35,12 +36,58 @@ public class MaShOADoubleSolution extends solution{
         this.referencePoint=referencePoint;
     }
     public MaShOADoubleSolution copy(MaShOADoubleSolution s,Hyperproblem p){
-        MaShOADoubleSolution newS = new MaShOADoubleSolution(p);
+        MaShOADoubleSolution b = new MaShOADoubleSolution(new DTLZ1());
+        b.is_select=this.is_select;
+        b.is_sec_best=this.is_sec_best;
+        b.is_best=this.is_best;
+        b.se=this.se;
+        b.JF=this.JF;
+        double fitness0=this.fitness[0];
+        double fitness1=this.fitness[1];
+        b.fitness[0]=fitness0;
+        b.fitness[1]=fitness1;
 
-        for (int i=0;i<variables.length;i++){
-            newS.variables[i].doubleVariable=s.variables[i].doubleVariable;
+        for(int i=0;i<this.variables.length;i++){
+            b.variables[i].doubleVariable=
+                    (this.variables[i].getDoubleVariable());
         }
-        return  newS;
 
+        b.is_best=this.is_best;
+        b.is_sec_best=this.is_sec_best;
+
+        b.nq=this.nq;
+        b.rank=this.rank;
+        b.sp=this.sp;
+        b.distance=this.distance;
+        //b.evafitness =this.evafitness;
+        return b;
+    }
+    @Override
+    public Object clone() throws CloneNotSupportedException
+    {
+        MaShOADoubleSolution b = new MaShOADoubleSolution(new Hyperproblem());
+        b.is_select=this.is_select;
+        b.is_sec_best=this.is_sec_best;
+        b.is_best=this.is_best;
+        b.se=this.se;
+        b.JF=this.JF;
+        double fitness0=this.fitness[0];
+        double fitness1=this.fitness[1];
+        b.fitness[0]=fitness0;
+        b.fitness[1]=fitness1;
+
+        for(int i=0;i<this.variables.length;i++){
+            b.variables[i].doubleVariable=(this.variables[i].getDoubleVariable());
+        }
+
+        b.is_best=this.is_best;
+        b.is_sec_best=this.is_sec_best;
+
+        b.nq=this.nq;
+        b.rank=this.rank;
+        b.sp=this.sp;
+        b.distance=this.distance;
+        //b.evafitness =this.evafitness;
+        return b;
     }
 }

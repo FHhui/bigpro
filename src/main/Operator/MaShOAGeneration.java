@@ -31,10 +31,10 @@ HashMap<Integer, ArrayList<MaShOADoubleSolution>> front;
         * 需要手动替换点
         *
         * */
-        WFG9 mp=(WFG9) p;
+        DTLZ1 mp=(DTLZ1) p;
         for (int i=0;i<s.array.size();i++){
             MaShOADoubleSolution ansm=s.array.get(i);
-            ansm=mp.evaluate(ansm);
+            ansm=mp.eval(ansm);
             s.array.set(i,ansm);
         }
         //快速非支配排序

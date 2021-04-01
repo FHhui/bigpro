@@ -44,7 +44,8 @@ public class MaShOA extends HyperAlgorithm{
         MDS=MDR.execute(MDS,p);
 
         for (int i=0;i<generation;i++){
-            MaShOADoubleSolutionSet parent=MDS.copy(p);
+            MaShOADoubleSolutionSet parent= null;
+            parent=MDS.copy(new DTLZ1());
             MaShOAinitJF MSR=new MaShOAinitJF(MDS);
             MDS=MSR.execute(this.referencePoints,i);
             //这里是计算完JF的种群
@@ -74,10 +75,10 @@ public class MaShOA extends HyperAlgorithm{
             /*
             * 需要替换部分
             * */
-            WFG9 mp=(WFG9)p;
+            DTLZ1 mp=(DTLZ1) p;
 
             for (int g=0;g<MDS.size;g++){
-                MaShOADoubleSolution a=mp.evaluate(MDS.array.get(g));
+                MaShOADoubleSolution a=mp.eval(MDS.array.get(g));
                 MDS.array.set(g,a);
             }
             //重新计算fitness
@@ -88,9 +89,9 @@ public class MaShOA extends HyperAlgorithm{
             this.referencePoints=RG.run(MDS,referencePoints);
             System.out.println(i);
         }
-        WFG9 mp=(WFG9)p;
+        DTLZ1 mp=(DTLZ1) p;
         for (int g=0;g<MDS.size;g++){
-            MaShOADoubleSolution a=mp.evaluate(MDS.array.get(g));
+            MaShOADoubleSolution a=mp.eval(MDS.array.get(g));
             MDS.array.set(g,a);
         }
         MDS=new NSGAFastNonSort().execute(MDS);
@@ -115,8 +116,9 @@ public class MaShOA extends HyperAlgorithm{
         return super.run(p);
     }
     public static void main(String args[]){
-        WFG9 p=new WFG9(5,5,3);
-        MaShOA test=new MaShOA(100,92,p);
+       //WFG9 p=new WFG9(5,5,3);
+        DTLZ1 p=new DTLZ1();
+        MaShOA test=new MaShOA(100,100,p);
         test.getResult();
     }
     double POP_Variance(double[] data) {

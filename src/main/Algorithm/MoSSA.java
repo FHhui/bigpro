@@ -30,49 +30,46 @@ public class MoSSA extends MultiAlgorithm {
         this.generation = generation;
         this.human = humans;
     }
+
     public NSSSADoubleSolutionSet getResult(Multiproblem p) {
+        ZDT1problem p1= (ZDT1problem)(p);
         NSSSADoubleSolutionSet s = new NSSSADoubleSolutionSet(human);
         NSSSADoubleRandominit NSDR = new NSSSADoubleRandominit();//**更改问题
         s = NSDR.execute(s, p);//随机初始化操作
         for (int i = 0; i < this.generation; i++) {
             //迭代操作
             //快速非支配排序
-            NSSSADoubleSolutionSet f = solutionSet.clone(s);
+            NSSSADoubleSolutionSet f = null;
+
+            try {
+                f = (NSSSADoubleSolutionSet) s.clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
 
             NSGAFastNonSort NSFN = new NSGAFastNonSort();//快速非支配排序算子
             NSFN.execute(s);
             //System.out.println("快速非支配排序结束");
 /***这一部分是替换部分
  * ***/
+            System.out.println("克隆2");
             CalLocation cl = new CalLocation();
             s = cl.execute(s, k);
             map = cl.getMap();
             delta = cl.getDelta();
             s = calfitness(s, map);
-
+            System.out.println("克隆3");
             //种群迁移
             /**
              * this part is able to change with the part which is mentioned
              * */
-//            CalDistance cld = new CalDistance();
-//            s = cld.execute(s);
-
             NSSSASort nss = new NSSSASort();
             s = nss.execute_evalfitness(s);
             NSFN.execute(s);
             for (int a = 0; a < human; a++) {
-                s.array.set(a, (new ZDT2problem()).evalute(s.array.get(a)));
+                s.array.set(a, (p1).evalute(s.array.get(a)));
             }
             System.out.println("计算完成距离之后");
-//            System.out.println(s.array.get(0).distance+"oooooooooooooooooooooooooooo");
-//            System.out.println(s.array.get(1).distance+"oooooooooooooooooooooooooooo");
-//            System.out.println(s.array.get(2).distance+"oooooooooooooooooooooooooooo");
-//            System.out.println(s.array.get(3).distance+"oooooooooooooooooooooooooooo");
-            for (int j = 0; j < s.size(); j++) {
-                if (s.array.get(j).rank == 1) {
-                    System.out.println("[" + s.array.get(j).fitness[0] + "," + s.array.get(j).fitness[1] + "],");
-                }
-            }
 
             SSANewDisplacePlace sndp = new SSANewDisplacePlace();
             sndp.execute(s, p);
@@ -80,16 +77,16 @@ public class MoSSA extends MultiAlgorithm {
             //季节条件
             NSFN.execute(s);
             for (int a = 0; a < human; a++) {
-                s.array.set(a, (new ZDT2problem()).evalute(s.array.get(a)));
+                s.array.set(a, (p1).evalute(s.array.get(a)));
             }
             System.out.println("种群迁移部分完成之后");
-            for (int j = 0; j < s.size(); j++) {
-                if (s.array.get(j).rank == 1) {
-                    System.out.println("[" + s.array.get(j).fitness[0] + "," + s.array.get(j).fitness[1] + "],");
-                }
-            }
+//            for (int j = 0; j < s.size(); j++) {
+//                if (s.array.get(j).rank == 1) {
+//                    System.out.println("[" + s.array.get(j).fitness[0] + "," + s.array.get(j).fitness[1] + "],");
+//                }
+//            }
             for (int a = 0; a < human; a++) {
-                s.array.set(a, (new ZDT2problem()).evalute(s.array.get(a)));
+                s.array.set(a, (p1).evalute(s.array.get(a)));
             }
 
             SSASeasonChange ssc = new SSASeasonChange();
@@ -97,20 +94,20 @@ public class MoSSA extends MultiAlgorithm {
             NSFN.execute(s);
             System.out.println("季节改变部分完成之后");
             for (int a = 0; a < human; a++) {
-                s.array.set(a, (new ZDT2problem()).evalute(s.array.get(a)));
+                s.array.set(a, (p1).evalute(s.array.get(a)));
             }
-            for (int j = 0; j < s.size(); j++) {
-                if (s.array.get(j).rank == 1) {
-                    System.out.println("[" + s.array.get(j).fitness[0] + "," + s.array.get(j).fitness[1] + "],");
-                }
-            }
+//            for (int j = 0; j < s.size(); j++) {
+//                if (s.array.get(j).rank == 1) {
+//                    System.out.println("{" + s.array.get(j).fitness[0] + "," + s.array.get(j).fitness[1] + "},");
+//                }
+//            }
             //     System.out.println("季节改变结束");
             //根据季节等条件更新位置
             //动态拥挤度更新算子
             //子父代精英选择机制
 
             for (int a = 0; a < human; a++) {
-                s.array.set(a, (new ZDT2problem()).evalute(s.array.get(a)));
+                s.array.set(a, (p1).evalute(s.array.get(a)));
             }
 
 
@@ -125,7 +122,7 @@ public class MoSSA extends MultiAlgorithm {
             NSFN.execute(s);
             for (int j = 0; j < s.size(); j++) {
                 if (s.array.get(j).rank == 1) {
-                    System.out.println("[" + s.array.get(j).fitness[0] + "," + s.array.get(j).fitness[1] + "],");
+                    System.out.println("{" + s.array.get(j).fitness[0] + "," + s.array.get(j).fitness[1] + "},");
                 }
             }
         }
@@ -147,8 +144,8 @@ public class MoSSA extends MultiAlgorithm {
     }
 
     public static void main(String args[]) {
-        MoSSA test = new MoSSA(10000, 50);
-        ZDT2problem z = new ZDT2problem();
+        MoSSA test = new MoSSA(100, 50);
+        ZDT1problem z = new ZDT1problem();
         test.getResult(z);
     }
 }

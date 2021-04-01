@@ -199,12 +199,12 @@ public class SSA_Tsp_NewDisplace {
                         int a, b, c, flag;
                         int ran1, ran2, temp;
                         int[] Gh1 = new int[cityNum];
-                        ran1 = random.nextInt(65535) % cityNum;
-                        ran2 = random.nextInt(65535) % cityNum;
+                        ran1 = random.nextInt(75535) % cityNum;
+                        ran2 = random.nextInt(75535) % cityNum;
 
                         while (ran1 == ran2) {
                             //如果交叉位置相同的话
-                            ran2 = random.nextInt(65535) % cityNum;
+                            ran2 = random.nextInt(75535) % cityNum;
                         }
 
                         if (ran1 > ran2)// 确保ran1<ran2
@@ -218,14 +218,41 @@ public class SSA_Tsp_NewDisplace {
                             Gh1[a] = s.array.get(best).city_cycle.get(b);//交叉基因组1
                         }
                         // 已近赋值i=ran2-ran1个基因
+//                        int temp=0
+//                        for (int start=flag;start<cityNum;start++){
+//                            if (ran1!=0){
+//                                Gh1[start]=s.array.get(i).city_cycle.get()
+//                            }else{
+//
+//                            }
+//                        }
                         for (c = 0, b = flag; b < cityNum;)// 染色体长度
                         {
+//                            int num=0;
+//                            for (int min=0;min<s.array.get(i).city_cycle.size();min++){
+//                                for (int max=0;max<s.array.get(i).city_cycle.size();max++){
+//                                    if (max!=min){
+//                                        if (s.array.get(i).city_cycle.get(max)==s.array.get(i).city_cycle.get(min)){
+//                                            num++;
+//                                        }
+//
+//                                    }
+//                                }
+//                            }
+//                            System.out.println(num);
+                           //经过测试citycycle当中不存在重复路
+                            if (c==cityNum){
+                                for (int hhh=0;hhh<cityNum;hhh++)
+                                System.out.println(Gh1[hhh]);
+                            }
                             Gh1[b] = s.array.get(i).city_cycle.get(c++);//对个体1的基因组进行读取
+                            //在前面nge里面找是否有一样的
                             for (a = 0; a < flag; a++) {
                                 if (Gh1[a] == Gh1[b]) {
                                     break;
                                 }
                             }
+                            //如果没有一样的就赋值
                             if (a == flag) {
                                 b++;
                             }

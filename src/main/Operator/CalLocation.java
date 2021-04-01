@@ -4,7 +4,10 @@ import main.Solution.NSSSADoubleSolution;
 import main.Solution.NSSSADoubleSolutionSet;
 import main.Solution.SSAMultiTspSolution;
 import main.Solution.SSAMultiTspSolutionSet;
+import main.problem.ZDT1problem;
 import main.problem.ZDT2problem;
+import main.problem.ZDT3problem;
+import main.problem.ZDT4problem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +25,7 @@ public class CalLocation {
             for (int i=0;i<s.array.size();i++){
                 for (int j=0;j<s.array.size()-i-1;j++){
                     if (s.array.get(j).fitness[m]>s.array.get(j+1).fitness[m]){
-                        NSSSADoubleSolution temp=s.array.get(j).copy(s.array.get(j),new ZDT2problem());
+                        NSSSADoubleSolution temp=s.array.get(j).copy(s.array.get(j),new ZDT1problem());
                         s.array.set(j,s.array.get(j+1));
                         s.array.set(j+1,temp);
                     }

@@ -19,7 +19,7 @@ public class NSGADoubleGeneration extends Selection {
         NSSSADoubleSolutionSet news = new NSSSADoubleSolutionSet(s.size());
         NSSSADoubleSolutionSet totalS = new NSSSADoubleSolutionSet(2 * s.size());
         HashMap<int[], ArrayList<NSSSADoubleSolution>> map = new HashMap<>();
-        ZDT2problem p = new ZDT2problem();
+        ZDT1problem p = new ZDT1problem();
         for (int i = 0; i < 2 * s.size(); i++) {
             if (i < s.size()) {
                 s.array.set(i, p.evalute(s.array.get(i)));
@@ -193,7 +193,7 @@ public class NSGADoubleGeneration extends Selection {
             }
         }
         for (int a = 0; a < totalS.array.size(); a++) {
-            totalS.array.set(a, (new ZDT2problem()).evalute(totalS.array.get(a)));
+            totalS.array.set(a, (new ZDT1problem()).evalute(totalS.array.get(a)));
         }
         NSGAFastNonSort Nfns = new NSGAFastNonSort();
         totalS = Nfns.execute(totalS);

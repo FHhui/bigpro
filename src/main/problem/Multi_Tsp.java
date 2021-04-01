@@ -8,6 +8,7 @@ import java.io.*;
 public class Multi_Tsp extends Multiproblem{
     //多目标tsp问题
     public int cityNum;//城市数目
+    public static final double NON_CONNECTED = Double.POSITIVE_INFINITY ;
     //public int scale;//规模
     public double [][] costMatrix;//花费矩阵
     public double[][] distance;//距离矩阵
@@ -20,6 +21,38 @@ public class Multi_Tsp extends Multiproblem{
             //初始化消费矩阵
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    public Multi_Tsp(int cityNum,String filename1) {
+        try {
+            this.cityNum=cityNum;
+            BufferedReader br = null;
+            br = new BufferedReader(new FileReader(filename1));
+            this.cityNum = Integer.parseInt(br.readLine());
+
+            this.distance = new double [cityNum][cityNum];
+            this.costMatrix = new double [cityNum][cityNum];
+
+            for (int i = 0; i < this.cityNum; i++) {
+                for (int j = 0; j < this.cityNum; j++) {
+                    this.distance[i][j] = Double.POSITIVE_INFINITY;
+                    this.costMatrix[i][j] = Double.POSITIVE_INFINITY;
+                }
+            }
+
+            for(String line; (line = br.readLine()) != null; ) {
+                System.out.println("111111111111111111111111");
+                String[] tokens = line.split(" ");
+                int origin = Integer.parseInt(tokens[0]);
+                int destin = Integer.parseInt(tokens[1]);
+                int distan = Integer.parseInt(tokens[2]);
+                double time = Double.parseDouble(tokens[3]);
+                int nodeid = Integer.parseInt(tokens[4]);
+                this.distance[origin][destin] = distan;
+                this.costMatrix[origin][destin] = time;
+            }
+        } catch (Exception e) {
+            new Exception("MultiobjectiveTSPInitializer.readProblem(): error when reading data file " + e);
         }
     }
 
@@ -91,19 +124,51 @@ public class Multi_Tsp extends Multiproblem{
         return matrix;
     }
     public SSAMultiTspSolution evalute(SSAMultiTspSolution s){
-        double len=0;
-        for (int i=1;i<cityNum;i++){
-            len+=distance[s.city_cycle.get(i-1)][s.city_cycle.get(i)];
-        }
-        len+=distance[s.city_cycle.get(cityNum-1)][s.city_cycle.get(0)];
-        s.fitness[0]=len;
+        double fitness1   ;
+        double fitness2   ;
 
-        double len2=0;
-        for (int i=1;i<cityNum;i++){
-            len2+=costMatrix[s.city_cycle.get(i-1)][s.city_cycle.get(i)];
+        fitness1 = 0.0 ;
+        fitness2 = 0.0 ;
+
+        for (int i = 0; i < (cityNum - 1); i++) {
+            int x ;
+            int y ;
+
+            x = s.city_cycle.get(i) ;
+            y = s.city_cycle.get(i+1) ;
+
+            if (distance[x][y] != NON_CONNECTED) {
+                fitness1 += distance[x][y];
+                fitness2 += costMatrix[x][y];
+            }
         }
-        len2+=costMatrix[s.city_cycle.get(cityNum-1)][s.city_cycle.get(0)];
-        s.fitness[1]=len2;
+        int firstCity ;
+        int lastCity  ;
+
+        firstCity = s.city_cycle.get(0) ;
+        lastCity = s.city_cycle.get(cityNum - 1) ;
+
+        if (distance[firstCity][lastCity] != NON_CONNECTED) {
+            fitness1 += distance[firstCity][lastCity];
+            fitness2 += costMatrix[firstCity][lastCity];
+        }
+
+        s.fitness[0]= fitness1;
+        s.fitness[1]= fitness2;
+//        double len=0;
+//        for (int i=1;i<cityNum;i++){
+//            len+=distance[s.city_cycle.get(i-1)][s.city_cycle.get(i)];
+//        }
+//        len+=distance[s.city_cycle.get(cityNum-1)][s.city_cycle.get(0)];
+//        s.fitness[0]=len;
+//
+//        double len2=0;
+//        for (int i=1;i<cityNum;i++){
+//            len2+=costMatrix[s.city_cycle.get(i-1)][s.city_cycle.get(i)];
+//        }
+//        len2+=costMatrix[s.city_cycle.get(cityNum-1)][s.city_cycle.get(0)];
+//        s.fitness[1]=len2;
+//        return s;
         return s;
     }
 

@@ -2,10 +2,11 @@ package main.Solution;
 
 import main.problem.Hyperproblem;
 import main.problem.Multiproblem;
+import main.problem.*;
 
 import java.util.ArrayList;
 
-public class NSSSADoubleSolution extends solution {
+public class NSSSADoubleSolution  extends solution implements Cloneable{
     //多目标松鼠的解类
     public double evafitness;//映射函数
     public DoubleVariable[] variables;//自变量集合
@@ -17,6 +18,7 @@ public class NSSSADoubleSolution extends solution {
     public double neighbor_distance;//最近的欧式距离
     public boolean is_best;//最优解标记
     public boolean is_sec_best;//次优解标记
+
     public ArrayList<NSSSADoubleSolution> sp;//支配集合
 
     public NSSSADoubleSolution(Multiproblem p) {
@@ -66,4 +68,33 @@ public class NSSSADoubleSolution extends solution {
         this.di=0.0;
         this.distance=0.0;
     }
+    public Object clone() throws CloneNotSupportedException
+    {
+        NSSSADoubleSolution b = new NSSSADoubleSolution(new ZDT1problem());
+
+        double fitness0=this.fitness[0];
+        double fitness1=this.fitness[1];
+        b.fitness[0]=fitness0;
+        b.fitness[1]=fitness1;
+
+
+        b.location[0]=this.location[0];
+        b.location[1]=this.location[1];
+
+        b.evafitness=this.evafitness;
+        b.nq=this.nq;
+        b.distance=this.distance;
+        b.rank=this.rank;
+        b.is_best=this.is_best;
+        b.is_sec_best=this.is_sec_best;
+        b.sp=this.sp;
+        b.di=this.di;
+        b.neighbor_distance=this.neighbor_distance;
+        for (int i=0;i<variables.length;i++){
+            b.variables[i].doubleVariable=
+                    this.variables[i].doubleVariable;
+        }
+        return b;
+    }
+
 }

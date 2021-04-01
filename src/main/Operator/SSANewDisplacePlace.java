@@ -70,7 +70,7 @@ public class SSANewDisplacePlace extends operator {
         //多目标松鼠算法的位置改变算子
         //具体的操作方法
 //        s = new SortMaoPao().run(s, p1);
-        ZDT2problem p = (ZDT2problem) p1;
+        ZDT1problem p = (ZDT1problem) p1;
         for (int i = MoSSA.is_best; i < s.array.size(); i++) {
             double dg = 0.5 + Math.random() * 0.61;
             double r = Math.random();//是否遇到捕食者的标尺
